@@ -1,0 +1,334 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{ title }}</li>
+        </ol>
+    </div>
+    <div class="title-style">
+        <h1 class="title-style">{{ title }}</h1>
+    </div>
+    <!--start form for closeComplaintPIAddFormGroup-->
+    <form [formGroup]="closeComplaintPIAddFormGroup" autocomplete="off" (ngSubmit)="onCloseComplaintSubmit()">
+        <!-- start div for row complaint-form class-->
+        <div class="row complaint-form">
+            <!--start div complaint reference no -->
+            <div *ngIf="complaintReferenceNo" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="complaintReferenceNo">Complaint Reference No</label>
+                <input type="text" class="form-control" formControlName="complaintReferenceNo" [value]="complaintReferenceNo" readonly="readonly"
+                 />
+            </div>
+            <!--end of div for complaint reference no-->
+            <!-- start div to add Yes and No actn -->
+            <ng-container *ngIf="rootCauseAnalysisValue==' '">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Do you agree with Root Cause Analysis?</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="rootCause" formControlName="rootCause" (click)="onRootCauseRadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="rootCause" formControlName="rootCause" (click)="onRootCauseRadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- end of div to add Yes and No actn -->
+            <!-- start div to edit Yes and No actn -->
+            <ng-container *ngIf="rootCauseAnalysisValue=='Y'">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Do you agree with Root Cause Analysis?</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="rootCause" formControlName="rootCause" [checked]=true (click)="onRootCauseRadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="rootCause" formControlName="rootCause" (click)="onRootCauseRadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="rootCauseAnalysisValue=='N'">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Do you agree with Root Cause Analysis?</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="rootCause" formControlName="rootCause" (click)="onRootCauseRadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="rootCause" formControlName="rootCause" [checked]=true (click)="onRootCauseRadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- end of div to edit Yes and preventive actn -->
+            <!-- start div for actn details -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="rootCauseAnalysisValue=='N'">
+                <label for="detailOfComplaint">Reason for Root Cause Analysis</label>
+                <label class="red-asterick">*</label>
+                <textarea rows="5" formControlName="rootCauseRsn" [maxlength]="rootCauseReasonInCloseLength" [value]="rootCauseRsnDet" class="form-control hide-horizontal-scroll" required></textarea>
+                <div class="alert alert-danger" *ngIf="closeComplaintPIAddFormGroup.get('rootCauseRsn').hasError('required') && closeComplaintPIAddFormGroup.get('rootCauseRsn').touched">
+                    <i class="fa fa-exclamation-circle"></i>Action Details is required!
+                </div>
+            </div>
+            <!-- end of div for actn details -->
+            <!-- start div to add Yes and No actn -->
+            <ng-container *ngIf="capaClose==' '">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Do you agree with CAPA?</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="cpAction" formControlName="cpAction" (click)="onCAPARadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="cpAction" formControlName="cpAction" (click)="onCAPARadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- end of div to add Yes and No actn -->
+            <!-- start div to edit Yes and No actn -->
+            <ng-container *ngIf="capaClose=='Y'">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Do you agree with CAPA?</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="cpAction" formControlName="cpAction" [checked]=true (click)="onCAPARadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="cpAction" formControlName="cpAction" (click)="onCAPARadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="capaClose=='N'">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Do you agree with CAPA?</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="cpAction" formControlName="cpAction" (click)="onCAPARadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="cpAction" formControlName="cpAction" [checked]=true (click)="onCAPARadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- end of div to edit Yes and preventive actn -->
+            <!-- start div for capa rsn details -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="capaClose=='N'">
+                <label>Reason for CAPA</label>
+                <label class="red-asterick">*</label>
+                <textarea rows="5" formControlName="caparsn" [maxlength]="capaAgreementReasonInCloseLength" [value]="capaRsnDet" class="form-control hide-horizontal-scroll" required></textarea>
+                <div class="alert alert-danger" *ngIf="closeComplaintPIAddFormGroup.get('caparsn').hasError('required') && closeComplaintPIAddFormGroup.get('caparsn').touched">
+                    <i class="fa fa-exclamation-circle"></i>Reason for CAPA is required!
+                </div>
+            </div>
+            <!-- end of div for capa rsn details -->
+            <!-- start div for edit required comercial settlement  -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <ng-container *ngIf="requiredCommercialSettlement==' '">
+                    <div style="display:inline-block;">
+                        <label>Customer may require commercial settlement</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement" (click)="onCommercialSettlementRadioClick('Y')"
+                            />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement" (click)="onCommercialSettlementRadioClick('N')"
+                            />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="requiredCommercialSettlement=='Y'">
+                    <div style="display:inline-block;">
+                        <label>Customer may require commercial settlement</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement" [checked]=true (click)="onCommercialSettlementRadioClick('Y')"
+                            />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement" (click)="onCommercialSettlementRadioClick('N')"
+                            />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="requiredCommercialSettlement=='N'">
+                    <div style="display:inline-block;">
+                        <label>Customer may require commercial settlement</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement" (click)="onCommercialSettlementRadioClick('Y')"
+                            />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement" [checked]=true (click)="onCommercialSettlementRadioClick('N')"
+                            />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </ng-container>
+            </div>
+            <!-- end of div for edit required commercial settlement -->
+            <!-- start div for commercial settlement rsn details -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="requiredCommercialSettlement=='N'">
+                <label for="detailOfComplaint">Reason for commercial settlement </label>
+                <label class="red-asterick">*</label>
+                <textarea rows="5" formControlName="commercialsettlementRsn" [maxlength]="requiredCommercialSettlementLength" [value]="commercialSettlementDet" class="form-control hide-horizontal-scroll" required></textarea>
+                <div class="alert alert-danger" *ngIf="closeComplaintPIAddFormGroup.get('commercialsettlementRsn').hasError('required') && closeComplaintPIAddFormGroup.get('commercialsettlementRsn').touched">
+                    <i class="fa fa-exclamation-circle"></i>Reason for commercial settlement is required!
+                </div>
+            </div>
+            <!-- end of div for commercial settlement rsn details -->
+            <!-- start div for Credit Note No  -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="requiredCommercialSettlement=='Y'">
+                <label for="detailOfComplaint">Credit Note No </label>
+                <!-- <label class="red-asterick">*</label> -->
+                <input type="text" formControlName="creditNoteNo" [maxlength]="creditNoteNoLength" [value]="creditNoteNoDet" class="form-control"/>
+                <!-- <div class="alert alert-danger" *ngIf="closeComplaintPIAddFormGroup.get('creditNoteNo').hasError('required') && closeComplaintPIAddFormGroup.get('creditNoteNo').touched">
+                    <i class="fa fa-exclamation-circle"></i>Credit Note No is required!
+                </div> -->
+            </div>
+            <!-- end of div for Credit Note No  -->
+            <!--files-->
+            <!-- start common label for file upload -->
+            <ng-container *ngIf="requiredCommercialSettlement=='Y'">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label class="red-coloured-label">(max file size 100 mb in total)</label>
+                </div>
+            </ng-container>
+            <!-- end of common lebel for file upload -->
+            <!-- start div for file upload -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px;">
+                <label for="imageFile">File(s) Upload</label>
+                <ng-container *ngIf="requiredCommercialSettlement=='N'">
+                    <label class="red-coloured-label">(max size 100 mb)</label>
+                </ng-container>
+                <input type="file" (change)="fileChange($event)" multiple/>
+            </div>
+            </div>
+            <!-- end of div for file upload -->
+
+            <!-- start div for approval file upload -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="requiredCommercialSettlement=='Y'">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px;">
+                    <label for="imageFile">File(s) Upload for Approval</label>
+                    <!-- <label class="red-asterick">*</label> -->
+                    <input type="file" (change)="approvalFileChange($event)" multiple/>
+                </div>
+            </div>
+            <!-- end of div for approval file upload -->
+             <!--start div for show files-->
+             <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo && selectedComplaintReferenceDetails.files?.length!=0">
+                <label>Uploaded file(s)</label>
+                <div *ngFor="let file of selectedComplaintReferenceDetails.files">
+                    <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                    <br/>
+                </div>
+            </div>
+            <!--end div for show files-->
+            <!--start div for show approval files-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo && selectedComplaintReferenceDetails.approvalFilesInClose?.length!=0">
+            <label>Uploaded Approval file(s)</label>
+            <div *ngFor="let approvalFiles of selectedComplaintReferenceDetails.approvalFilesInClose">
+                <a href="{{approvalFiles.fileUrl}}" target="_blank">{{approvalFiles.fileName}}</a>
+                <br/>
+            </div>
+            </div>
+            <!--end div for show approval files-->
+            
+            <!-- start div for remarks details -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="detailOfComplaint">Remarks</label>
+                <label class="red-asterick">*</label>
+                <textarea rows="5" formControlName="remarks" [maxlength]="closeRemarksLength" [value]="remarksDet" class="form-control hide-horizontal-scroll" required></textarea>
+                <div class="alert alert-danger" *ngIf="closeComplaintPIAddFormGroup.get('remarks').hasError('required') && closeComplaintPIAddFormGroup.get('remarks').touched">
+                    <i class="fa fa-exclamation-circle"></i>Remarks is required!
+                </div>
+            </div>
+            <!-- end of div for remarks details -->
+
+            <!-- start div for Submit  and Cancel Button-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- start div for Submit Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn btn-primary primary-button-style" [disabled]="!(closeComplaintPIAddFormGroup.valid && submitButtonEnable)">Submit
+                    </button>
+                </div>
+                <!-- end div for Submit Button-->
+                <!-- start div for Cancel Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+                <!-- end div for Cancel Button-->
+            </div>
+            <!-- start div for Submit  and Cancel Button-->
+        </div>
+        <!-- end div for row complaint-form class-->
+        <!-- error msg div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="resErrorType == errorConst">
+            <div class="alert alert-danger">
+                {{resErrorMsg}}&nbsp;
+                <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick(resErrorType)">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <br/>
+            <br/>
+        </div>
+        <!-- end of error msg div -->
+    </form>
+    <!--end form for closeComplaintPIAddFormGroup-->
+</div>
+<!--end of div page-container-->
+
+<ispl-busy-spinner *ngIf="busySpinner.busy"></ispl-busy-spinner>

@@ -1,0 +1,82 @@
+<div class="modal-header">
+  <h4 class="modal-title">Official Document Search</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <!-- start div for searching through blanck invoice no -->
+  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="invoiceNo==''&& custName=='' && custCode==''">
+    Do you want to search Official Document?
+  </div>
+  <!-- end div for searching through black invoice no -->
+
+  <!-- start div for searching through blank invoice no -->
+  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="invoiceNo=='' && custName!='' && custCode!=''">
+    Your Customer Code is {{custCode}} and Customer Name is {{custName}}. Do you want to continue with this Customer Code?
+    <br/> If Yes then press Yes otherwise press No.
+  </div>
+  <!-- end div for searching through black invoice no -->
+
+  <!-- start div for invoice no textbox if invoiceNo isn't equal to blanck -->
+  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="invoiceNo!=''">
+    <label>Official Document No</label>
+    <input type="text" class="form-control" [value]="invoiceNo" readonly="readonly" />
+  </div>
+  <!-- end div for invoice no textbox -->
+
+  <!-- start table div -->
+  <div class="col-lg-12 col-md-12 col-xs-12" style="margin-bottom: 15px; margin-top: 5px;" *ngIf="items.length!=0">
+    <table class="table-style" *ngIf="items.length!=0">
+      <thead>
+        <tr class="th-style">
+          <td class="header-style-first">
+          </td>
+          <td class="header-style">
+            {{complaintDIInvoiceDetails.itemsHeader?.itemName}}
+          </td>
+          <td class="header-style-last">
+            {{complaintDIInvoiceDetails.itemsHeader?.invoiceQtyInMtrs}}
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="tr-style" *ngFor="let i of items
+              let odd = odd; let even = even;" [ngClass]="{even: even, odd: odd }">
+          <td class="td-style-first">
+            <input type="checkbox" [checked]=i.uiCheckItmFlag (click)="onCheckboxClick(i.itemCode)" />
+          </td>
+          <td class="td-style">
+            {{i?.itemName}}
+          </td>
+          <td class="td-style-last">{{i?.invoiceQtyInMtrs}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--end table div-->
+  
+  <!-- start error msg div for Invalid Invoice Number -->
+  <div class="col-lg-12 col-md-12 col-xs-12 invalid-invoice" *ngIf="msgType=='Error' && invoiceNo!=''">
+    Invalid Official Document No!
+  </div>
+  <!-- end error msg div for Invalid Invoice Number -->
+
+  <!-- start error msg div for Invalid Customer Code -->
+  <div class="col-lg-12 col-md-12 col-xs-12 invalid-invoice" *ngIf="items.length==0 && customerCodeError">
+    Customer Code Doesn’t Match!
+  </div>
+  <!-- end error msg div for Invalid Customer Code -->
+</div>
+<!--end modal body div-->
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="chooseItem()" *ngIf="msgType!='Error' && customerCodeError==false" [disabled]="checkedItemArr.length==0">Choose</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')" *ngIf="invoiceNo!=''">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)=" onRedirectInvoiceSearch()" *ngIf="invoiceNo==''">Yes</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')" *ngIf="invoiceNo==''">No</button>
+</div>
+<!-- spinner -->
+<ispl-busy-spinner *ngIf="busySpinner.busy">
+</ispl-busy-spinner>
+<!-- end of spinner-->

@@ -1,0 +1,485 @@
+.page-container {
+    /* margin-top: 54px; */
+    overflow-x: hidden;
+  }
+  
+  .complaint-title {
+    width: 100%;
+    height: 40px;
+    padding-left: 15px;
+    color: black;
+  }
+  
+  h1.complaint-title {
+    font-size: 30px;
+  }
+  
+  .complaint-form {
+    padding: 30px 30px;
+  }
+  
+  .compliant-submit-button-div{
+    padding-left: 15px;
+  }
+  
+  .button-holder {
+    float: left;
+  }
+  
+  .compliant-submit-button-size{
+    width: 100%;
+    position: relative;
+    margin-left: -15px;
+  }
+  
+  .button-gaps {
+    height: 10px;
+    width: 100%;
+  }
+  
+  input:focus {
+    border: 1px solid #0098DF;
+    border-left: 5px solid #0098DF;
+    box-shadow: 0 0 6px #78ABC4;
+  }
+  
+  .ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+  .breadcrumb-custom {
+    border-bottom: 1px solid #DADADA;
+    box-shadow: 0px 2px 2px #E7E7E7;
+  }
+  
+  .primary-button-style {
+    width: 100%;
+    height: 40px;
+    box-shadow: 0px 0px 10px #A5A5A5;
+    background-color: #0085BE;
+    cursor: pointer;
+    margin-left: -15px;
+  }
+  
+  .primary-button-style:hover {
+    background-color: #0073B0;
+  }
+  
+  .default-button-style {
+    width: 100%;
+    height: 40px;
+    box-shadow: 0px 0px 10px #A5A5A5;
+    background-color: #666666;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-left: -15px;
+  }
+  
+  .default-button-style:hover {
+    background-color: #514E4E;
+  }
+  
+  /* scroll ul style and li style */
+  .ul-style{
+      height:112px;
+      overflow-y:scroll;
+      border:1px solid #DADADA;
+  }
+  .li-style{
+    border:none;
+  }
+  /* end of scroll ul style and li style */
+  
+  
+  /*invoice search style*/
+  .invoice-search-button {
+      background-color: #0275d8;
+      border-color: #0275d8;
+      height: 38px;
+      cursor: pointer;
+  }
+  
+  .invoice-no-alert {
+    padding-top: 52px!important;
+  }
+  /* end of invoice search style*/
+  
+  /* date picker height*/
+  .date-picker-height {
+    height:38px;
+  }
+  /* end date picker height*/
+  
+  /*red asterick style*/
+  .red-asterick{
+      color: #cc100c;
+      font-weight: bolder;
+  }
+  /*end of asterick style*/
+  
+  
+  
+  /* start style for radio button*/
+  
+   /*Box to contain form controls*/
+  .control {
+      font-size: 18px;
+      position: relative;
+      display: block;
+      margin-bottom: 15px;
+      padding-left: 30px;
+      cursor: pointer;
+  }
+  
+  .control input {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+  }
+    
+  
+  .control__indicator {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: #e6e6e6;
+  }
+  
+  .control--radio .control__indicator {
+      border-radius: 50%;
+  }
+   /* Hover and focus states */
+  .control:hover input ~ .control__indicator,
+  .control input:focus ~ .control__indicator {
+      background: #ccc;
+  }
+  
+  /* Checked state */
+  .control input:checked ~ .control__indicator {
+      /*background: #0e647d;*/
+    background: rgb(10, 118, 214); 
+  }
+  
+  /* Hover state whilst checked */
+  .control:hover input:not([disabled]):checked ~ .control__indicator,
+  .control input:checked:focus ~ .control__indicator {
+      background: rgb(10, 118, 214);  
+  }
+  
+  /* Disabled state */
+  .control input:disabled ~ .control__indicator {
+      pointer-events: none;
+      opacity: .6;
+      background: #e6e6e6;
+  }
+  
+  /* Check mark */
+  .control__indicator:after {
+      position: absolute;
+      display: none;
+      content: '';
+  }
+  
+  /* Show check mark */
+  .control input:checked ~ .control__indicator:after {
+      display: block;
+  }
+  
+  /* Radio button inner circle */
+  .control--radio .control__indicator:after {
+      top: 7px;
+      left: 7px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+  }
+  
+  /* Disabled circle colour */
+  .control--radio input:disabled ~ .control__indicator:after {
+      background: #7b7b7b;
+  }
+  
+  /* end style for radio button*/
+  
+  
+  /*start style div for faceted-data-div*/
+  .faceted-data-div{
+      border-bottom: 1px solid #dbdada;
+      border-top: 1px solid #dbdada;
+      border-left: 1px solid #dbdada;
+      border-right: 1px solid #dbdada;
+      background-color: #dbdada;
+      color: #69696B;
+      font-family: sans-serif;
+      height: 33px;
+      padding: 5px 10px;
+      border-radius: 10px;
+  }
+  
+  .faceted-data-div:hover{
+    cursor: pointer;
+    /*text-decoration: line-through;*/
+  }
+  
+  .faceted-data-div:hover .close {
+    opacity: 1;
+    color: #000;
+  }
+  .alert-danger {
+    cursor: pointer;
+  }
+  
+  .alert-danger:hover .close {
+    opacity: 1;
+    color: #000;
+  }
+  
+  
+  /*table grid style*/
+  .table-style {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    border: 1px solid #FEFEFE !important;
+    background-color: #FFFFFF;
+  }
+  
+  .th-style {
+    background-color: #dbdada;
+    font-family: sans-serif;
+    font-size: 15px;
+    color: #000000;
+    letter-spacing: 1px;
+    padding-left: 10px;
+    border: 1px solid #7B7B7B;
+    box-shadow: 0px 1px 5px #D1D1D1;
+    height: 34px;
+  }
+  
+  .tr-style {
+    font-size: 15px;
+    font-family: sans-serif;
+    color : #69696B;
+    height: 50px;
+    box-shadow: 0px 1px 5px #CBCBCB;
+    border: 1px solid #BCBCBC;
+  }
+  
+  .td-style {
+    padding-left: 10px;
+    border-bottom: 1px solid #CACACA;
+    border-top: 1px solid #CACACA;
+    /*border-left: 1px solid #EFEFEF;*/
+  }
+  
+  .td-style-first {
+    padding-left: 10px;
+    border-bottom: 1px solid #CACACA;
+    border-top: 1px solid #CACACA;
+    border-left: 3px solid #0098DF;
+  }
+  
+  .td-style-last {
+    padding-left: 10px;
+    padding-right: 6px;
+    border-bottom: 1px solid #CACACA;
+    border-top: 1px solid #CACACA;
+    border-right: 1px solid #CACACA;
+  }
+  
+  .header-style {
+    padding-left: 10px;
+    border-bottom: 1px solid #BCBCBC;
+    border-top: 1px solid #BCBCBC;
+  }
+  
+  .header-style-first {
+    padding-left: 10px;
+    border-bottom: 1px solid #BCBCBC;
+    border-top: 1px solid #BCBCBC;
+    border-left: 1px solid #BCBCBC;
+  }
+  
+  .header-style-last {
+    padding-left: 10px;
+    border-bottom: 1px solid #BCBCBC;
+    border-top: 1px solid #BCBCBC;
+    border-right: 1px solid #BCBCBC;
+  }
+  
+  .even {
+    background-color: #FFFFFF;
+  }
+  
+  .even:hover {
+    background-color: #0098DF;
+    color: #FFFFFF;
+    cursor: pointer;
+  }
+  
+  .odd {
+    /*background-color: #F4F4F4;*/
+    background-color: #FFFFFF;
+  }
+  .odd:hover {
+    background-color: #0098DF;
+    color: #FFFFFF;
+    cursor: pointer;
+  }
+  
+  .table-hover {
+    background-color: #E9E9E9;
+    cursor: pointer;
+  }
+  
+     
+  /*end of style div for faceted-data-div*/
+  
+  /*style for close button*/
+  .close span {
+    text-align: center;
+    color: #000;
+    z-index: 1;
+  }
+  
+  .close {
+      float: right;
+      font-size: 1.5rem;
+      font-weight: bold;
+      line-height: 1;
+      content:'x';
+      color: #000;
+      text-shadow: 0 1px 0 #fff;
+      /*opacity: .5;*/
+      opacity: 0;
+      transition: opacity .35s ease;
+  }
+  /*end of style for close button*/
+  
+  /*style for expand*/
+  .expand {
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.5s;
+    color: #FFF;
+  }
+  section {
+    padding: 0 20px;
+    padding-bottom: 10px;
+  }
+  .toggle:checked ~ .expand {
+    height: auto;
+  }
+  .toggle:checked ~ label::after {
+    font-weight: bold;
+    content: "-";
+    color: #666!important;
+    font-size: 15px;
+    padding-left: 7px;
+    padding-top: 0px;
+    width: 20px;
+    height: 21px;
+  }
+  /*end of style for expand*/
+  
+  .scroll-bar{
+    overflow: auto;
+    overflow-y: hidden;
+  }
+  
+  .wrap-style{
+    word-wrap: break-word;
+    width: 288px;
+  }
+  
+  .hideextra { 
+    white-space: nowrap; 
+    overflow: hidden;
+     text-overflow:ellipsis;
+   }
+
+   .divScroll {
+    overflow-y:scroll;
+    height:200px;
+    width:100px;
+  }
+
+  .cursor-pointer{
+    cursor: pointer;
+  }
+
+
+._2zrpKA {
+  padding: 8px 10px 10px 0;
+  width: auto;
+  color: #191a1b;
+  font-size: inherit;
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #285cf0;
+}
+
+/* start style for close button */
+.close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  content:'x';
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.even:hover .close {
+  opacity: 1;
+  color: #000;
+}
+
+.odd:hover .close {
+  opacity: 1;
+  color: #000;
+}
+
+.btn-style1 {
+  width: 100%;
+  height: 40px;
+  box-shadow: 0px 0px 10px #A5A5A5;
+  background-color: #666666;
+  color: #FFFFFF;
+  margin-left: -15px;
+  font-family: sans-serif;
+  /* font-size: 13px; */
+  letter-spacing: 1px;
+  /* box-shadow: 0px 1px 5px #C7C7C8; */
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  /*border-style: solid;*/
+  /*border-color: #AEAEAE;*/
+}
+.btn-style2 {
+  width: 100%;
+  height: 40px;
+  background-color: #3078BE;
+  font-family: sans-serif;
+  /* font-size: 13px; */
+  letter-spacing: 1px;
+  color: #FFFFFF;
+  box-shadow: 0px 1px 5px #C7C7C8;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  /*border-style: solid;*/
+  /*border-color: #AEAEAE;*/
+}
+
+/*end of style for close button*/

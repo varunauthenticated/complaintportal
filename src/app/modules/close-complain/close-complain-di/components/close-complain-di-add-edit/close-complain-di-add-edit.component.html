@@ -1,0 +1,118 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </div>
+    <!--start process flow div-->
+    <app-flowmangement [complainNo]="routeParam.complaintReferenceNo" [complianStatus]="routeParam.complaintStatus" [pageType]="'add'"></app-flowmangement>
+    <!-- end div of process flow  -->
+    <!--start form for closeComplainDIFormGroup-->
+    <form [formGroup]="closeComplainDIFormGroup" autocomplete="off" (ngSubmit)="onComplaintResolutionPISubmit()">
+        <!-- start div for row complaint-form class-->
+        <div class="row complaint-form">
+            <!--start div complaint reference no -->
+            <div *ngIf="routeParam.complaintReferenceNo" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="complaintReferenceNo">Complaint Reference No</label>
+                <input type="text" class="form-control" formControlName="complaintReferenceNo" readonly="readonly" />
+            </div>
+            <!--end of div for complaint reference no-->
+
+            <!--start div closeDate-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label>Date</label>
+                <input type="text" class="form-control" formControlName="closeDate" readonly="readonly" />
+            </div>
+            <!--end of div for closeDate-->
+
+            <!-- start div for edit required comercial settlement  -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div style="display:inline-block;">
+                    <label>Acknoledgement Received</label>
+                    <label class="red-asterick">*</label>
+                    <label class="control control--radio">Yes
+                        <input type="radio" name="acknoledgementReceived" formControlName="acknoledgementReceived" value="Y" />
+                        <div class="control__indicator"></div>
+                    </label>
+                    <label class="control control--radio">No
+                        <input type="radio" name="acknoledgementReceived" formControlName="acknoledgementReceived" value="N" />
+                        <div class="control__indicator"></div>
+                    </label>
+                    <label class="control control--radio">Don't know
+                        <input type="radio" name="acknoledgementReceived" formControlName="acknoledgementReceived" value="D" />
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+            </div>
+            <!-- end of div for edit required commercial settlement -->
+
+            <!-- start div for actn details -->
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <label for="remarksInResoDI">Remarks</label>
+                <label class="red-asterick">*</label>
+                <textarea formControlName="remarks" class="form-control hide-horizontal-scroll comment-box-textarea-style" required></textarea>
+                <div class="alert alert-danger" *ngIf="closeComplainDIFormGroup.get('remarks').hasError('required') && closeComplainDIFormGroup.get('remarks').touched">
+                    <i class="fa fa-exclamation-circle"></i>Remarks is required!
+                </div>
+            </div>
+            <!-- end of div for actn details -->
+
+            <!--start fle upload div-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="imageFile">File(s) Upload</label>
+                <label class="red-coloured-label">(max size 100 mb)</label>
+                <input type="file" #fileInput (change)="fileChange($event)" />
+            </div>
+            <!--end of file upload div-->
+
+            <!--files-->
+            <!--start div for show files-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="fileArr?.length!=0">
+                <label>Uploaded file(s)</label>
+                <div *ngFor="let file of fileArr">
+                    <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                    <br/>
+                </div>
+            </div>
+            <!--end div for show files-->
+            <!-- start div for Submit  and Cancel Button-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- start div for Submit Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn btn-primary primary-button-style" [disabled]="!(closeComplainDIFormGroup.valid)">Submit
+                    </button>
+                </div>
+                <!-- end div for Submit Button-->
+                <!-- start div for Cancel Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+                <!-- end div for Cancel Button-->
+            </div>
+            <!-- start div for Submit  and Cancel Button-->
+        </div>
+        <!-- end div for row complaint-form class-->
+        <!-- error msg div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="errorMsgObj.errMsgShowFlag">
+            <div class="alert alert-danger">
+                {{errorMsgObj.errorMsg}}&nbsp;
+                <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <br/>
+            <br/>
+        </div>
+        <!-- end of error msg div -->
+    </form>
+    <!--end form for closeComplainDIFormGroup-->
+</div>
+<!--end of div page-container-->
+
+<ispl-busy-spinner *ngIf="busySpinner"></ispl-busy-spinner>

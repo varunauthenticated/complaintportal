@@ -1,0 +1,143 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </div>
+    <div class="title-style">
+        <h1 class="title-style">{{ title }}</h1>
+    </div>
+    <!--start form for capaActionDIAddFormGroup-->
+    <form [formGroup]="capaActionDIAddFormGroup" autocomplete="off" (ngSubmit)="onCAPAActionDISubmit()">
+        <!-- start div for row complaint-form class-->
+        <div class="row complaint-form">
+            <!--start div complaint reference no -->
+            <div *ngIf="complaintReferenceNo" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="complaintReferenceNo">Complaint Reference No</label>
+                <input type="text" class="form-control" formControlName="complaintReferenceNo" [value]="complaintReferenceNo" readonly="readonly"
+                />
+            </div>
+            <!--end of div for complaint reference no-->
+            <!-- start div for max file size label -->
+            <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10" *ngIf="viewEditParam === 'modify'" style="text-align: center">
+                <label class="red-coloured-label">(max file size 100 mb in total)</label>
+            </div>
+            <!-- end of div for max file size label -->
+            <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10" *ngIf="viewEditParam === 'view'" style="text-align: center">
+            </div>
+            <!-- start div for corrective actn details -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="correctiveActionDetails!=undefined && viewEditParam == 'modify'">
+                <label>Corrective Action Details</label>
+                <label class="red-asterick">*</label>
+                <textarea rows="5" formControlName="correctiveActionDet" [maxlength]="actionTakenAtPlantLength" [value]="correctiveActionDetails" 
+                    class="form-control hide-horizontal-scroll"></textarea>
+                <div class="alert alert-danger" *ngIf="capaActionDIAddFormGroup.get('correctiveActionDet').hasError('required') && capaActionDIAddFormGroup.get('correctiveActionDet').touched">
+                    <i class="fa fa-exclamation-circle"></i>Corrective Action Details is required!
+                </div>
+            </div>
+            <!-- end of div for corrective actn details -->
+            <!-- start div for corrective actn details[view] -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="correctiveActionDetails!=undefined && viewEditParam == 'view'">
+                <label>Corrective Action Details</label>                
+                <textarea rows="5" formControlName="correctiveActionDet" [maxlength]="actionTakenAtPlantLength" [value]="correctiveActionDetails" 
+                    class="form-control hide-horizontal-scroll" readonly></textarea>
+            </div>
+            <!-- end of div for corrective actn details[view] -->
+             
+            <!--start corrective file upload div-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="viewEditParam == 'modify'">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px;">
+                    <label for="imageFile">File(s) Upload [Corrective] </label>
+                    <input type="file" (change)="fileChangeForCorrective($event)" multiple/>
+                </div>
+            </div>
+            <!--end of Corrective file upload div-->
+             <!--files-->
+            <!--start div for show corrective files-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo && selectedComplaintReferenceDetails.correctiveActionFiles?.length!=0">
+                <label>Uploaded Corrective file(s)</label>
+                <div *ngFor="let file of selectedComplaintReferenceDetails.correctiveActionFiles">
+                    <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                    <br/>
+                </div>
+            </div>
+            <!--end div for show corrective files-->
+            <!-- start div -->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                
+            </div>
+            <!-- end of div -->
+
+            <!-- start div for Preventive actn details -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="preventiveActionDetails!=undefined && viewEditParam == 'modify'">
+                <label>Preventive Action Details</label>
+                <textarea rows="5" formControlName="preventiveActionDet" class="form-control hide-horizontal-scroll" [value]="preventiveActionDetails"></textarea>
+            </div>
+            <!-- end of div for Preventive actn details -->
+            <!-- start div for Preventive actn details[view] -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="preventiveActionDetails!=undefined && viewEditParam == 'view'">
+                <label>Preventive Action Details</label>                
+                <textarea rows="5" formControlName="preventiveActionDet" class="form-control hide-horizontal-scroll" [value]="preventiveActionDetails" readonly></textarea>
+            </div>
+            <!-- end of div for Preventive actn details[view] -->
+            
+            <!--start div for show preventive files-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo && selectedComplaintReferenceDetails.preventiveActionFiles?.length!=0">
+            <label>Uploaded Preventive file(s)</label>
+                <div *ngFor="let file of selectedComplaintReferenceDetails.preventiveActionFiles">
+                    <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                    <br/>
+                </div>
+            </div>
+            <!--end div for show perventive files-->
+             <!--start preventive file upload div-->
+             <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="viewEditParam == 'modify'">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px;">
+                    <label for="imageFile">File(s) Upload [Preventive] </label>
+                    <input type="file" (change)="fileChangeForPreventive($event)" multiple/>
+                </div>
+            </div>
+            <!--end of preventive file upload div-->               
+
+
+            <!-- start div for Submit  and Cancel Button-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- start div for Submit Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder" *ngIf="viewEditParam == 'modify'">
+                    <button type="submit" class="btn btn-primary primary-button-style" [disabled]="!capaActionDIAddFormGroup.valid">Submit
+                    </button>
+                </div>
+                <!-- end div for Submit Button-->
+                <!-- start div for Cancel Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+                <!-- end div for Cancel Button-->
+            </div>
+            <!-- start div for Submit  and Cancel Button-->
+        </div>
+        <!-- end div for row complaint-form class-->
+        <!-- error msg div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="resMsgType == errorConst">
+            <div class="alert alert-danger">
+                {{resErrorMsg}}&nbsp;
+                <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick(resMsgType)">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <br/>
+            <br/>
+        </div>
+        <!-- end of error msg div -->
+    </form>
+    <!--end form for capaActionDIAddFormGroup-->
+</div>
+<!--end of div page-container-->
+
+<ispl-busy-spinner *ngIf="busySpinner.busy"></ispl-busy-spinner>

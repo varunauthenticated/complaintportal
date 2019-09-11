@@ -1,0 +1,19 @@
+<div>
+    <table>
+        <tr> 
+          <td *ngFor="let compStatusStrucEl of compStatusStructureList">
+            <div class="comp-struc-div-style">
+              <div>                
+                <div [ngClass]="compStatusStrucEl.headerClass">
+                  <span class="header-span-style">{{compStatusStrucEl.flowName}}</span>
+                </div>
+                <div [ngClass]="compStatusStrucEl.footerClass">
+                  <span class="footer-span-style">{{compStatusStrucEl.flowMsg}}</span>
+                </div>
+              </div>
+              <span style="font-size: 12px;"><ng-container *ngIf="compStatusStrucEl.flowDate !='NA'">{{compStatusStrucEl.flowDate| date: 'dd-MMM-yyyy'}}</ng-container></span>
+            </div>
+          </td>
+        </tr>
+      </table>
+</div>

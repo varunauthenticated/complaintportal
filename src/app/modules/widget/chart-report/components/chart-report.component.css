@@ -1,0 +1,12 @@
+.custom-chart-report-div-style {
+    position: unset;
+    height: 100%;
+    background-color: white;
+    box-shadow: 1px 1px 15px #949494;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #B1B1B1;
+    text-align: center;
+    float: none;
+    margin: 0 auto;
+}

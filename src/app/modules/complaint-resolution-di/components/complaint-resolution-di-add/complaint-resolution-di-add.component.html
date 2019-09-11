@@ -1,0 +1,93 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </div>
+    <div class="title-style">
+        <h1 class="title-style">{{ title }}</h1>
+    </div>
+    <!--start form for complaintResolutionPIFormGroup-->
+    <form [formGroup]="complaintResolutionPIFormGroup" autocomplete="off" (ngSubmit)="onComplaintResolutionPISubmit()">
+        <!-- start div for row complaint-form class-->
+        <div class="row complaint-form">
+            <!--start div complaint reference no -->
+            <div *ngIf="complaintReferenceNo" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="complaintReferenceNo">Complaint Reference No</label>
+                <input type="text" class="form-control" formControlName="complaintReferenceNo" [value]="complaintReferenceNo" readonly="readonly"
+                />
+            </div>
+            <!--end of div for complaint reference no-->
+    
+            <!-- start div for actn details -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="remarksInResoDI">Remarks</label>
+                <label class="red-asterick">*</label>
+                <textarea rows="5" formControlName="remarks"  [value]="remarksDetails" class="form-control hide-horizontal-scroll" required></textarea>
+                 <div class="alert alert-danger" *ngIf="complaintResolutionPIFormGroup.get('remarks').hasError('required') && complaintResolutionPIFormGroup.get('remarks').touched">
+                    <i class="fa fa-exclamation-circle"></i>Remarks is required!
+                </div> 
+            </div>
+            <!-- end of div for actn details -->
+
+            <!--files-->
+            <!--start div for show files-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo && selectedComplaintReferenceDetails.files?.length!=0">
+                <label>Uploaded file(s)</label>
+                <div *ngFor="let file of selectedComplaintReferenceDetails.files">
+                    <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                    <br/>
+                </div>
+            </div>
+            <!--end div for show files-->
+
+            <!--start fle upload div-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px;">
+                    <label for="imageFile">File(s) Upload</label>
+                    <label class="red-coloured-label">(max size 100 mb)</label>
+                    <input type="file" (change)="fileChange($event)" multiple/>
+                </div>
+            </div>
+            <!--end of file upload div-->
+            <!-- start div for Submit  and Cancel Button-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- start div for Submit Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn btn-primary primary-button-style" [disabled]="!(complaintResolutionPIFormGroup.valid && submitButtonEnable)">Submit
+                    </button>
+                </div>
+                <!-- end div for Submit Button-->
+                <!-- start div for Cancel Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+                <!-- end div for Cancel Button-->
+            </div>
+            <!-- start div for Submit  and Cancel Button-->
+        </div>
+        <!-- end div for row complaint-form class-->
+        <!-- error msg div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="resErrorType == errorConst">
+            <div class="alert alert-danger">
+                {{resErrorMsg}}&nbsp;
+                <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick(resErrorType)">
+            <span aria-hidden="true">×</span>
+          </button>
+            </div>
+            <br/>
+            <br/>
+        </div>
+        <!-- end of error msg div -->
+    </form>
+    <!--end form for complaintResolutionPIFormGroup-->
+</div>
+<!--end of div page-container-->
+
+<ispl-busy-spinner *ngIf="busySpinner.busy"></ispl-busy-spinner>

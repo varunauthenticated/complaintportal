@@ -1,0 +1,136 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </div>
+    <!--start process flow div-->
+    <app-flowmangement [complainNo]="routeParam.complaintReferenceNo" [complianStatus]="routeParam.complaintStatus" [pageType]="'view'"></app-flowmangement>
+    <!-- end div of process flow  -->
+    <!-- start ca body  -->
+    <div>
+        <!-- start table div -->
+        <div *ngIf="prevCompDetShowFlag && closeDetails.length > 1" class="col-lg-12 col-md-12 col-xs-12 scroll-bar grid-table-style"
+            style="margin-top: 5px;">
+            <table class="table-style">
+                <thead>
+                    <tr class="th-style">
+                        <td class="header-style-first">Select</td>
+                        <td class="hideextra" *ngFor="let closeRprt of closeReportTable" [ngClass]="closeRprt.headerClass">
+                            {{ closeRprt.headerDesc }}
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr class="tr-style" *ngFor="let closeDet of closeDetails; let closeIndx = index;">
+                        <td class="td-style-first" style="cursor: pointer;" (click)="selectData(closeIndx)">
+                            <i class="fa" [ngClass]="closeIndex == closeIndx ? 'fa-dot-circle-o' : 'fa-circle-o'"></i>
+                        </td>
+                        <td class="hideextra" *ngFor="let closeRprt of closeReportTable" [ngClass]="closeRprt.dataClass">
+                            {{ closeDet[closeRprt.headerKey] }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--end table div-->
+
+        <!--start form for closeComplainDIFormGroup-->
+        <div class="complaint-form">
+            <form [formGroup]="closeComplainDIFormGroup" autocomplete="off">
+                <!-- start div for row complaint-form class-->
+                <div class="row">
+                    <!-- class="row complaint-form"> -->
+                    <!--start div complaint reference no -->
+                    <div *ngIf="routeParam.complaintReferenceNo" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label for="complaintReferenceNo">Complaint Reference No</label>
+                        <input type="text" class="form-control" formControlName="complaintReferenceNo" readonly="readonly" />
+                    </div>
+                    <!--end of div for complaint reference no-->
+
+                    <!--start div closeDate-->
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label>Date</label>
+                        <input type="text" class="form-control" formControlName="closeDate" readonly="readonly" />
+                    </div>
+                    <!--end of div for closeDate-->
+
+                    <!-- start div for edit required comercial settlement  -->
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <div style="display:inline-block;">
+                            <label>Acknoledgement Received</label>
+                            <label class="control control--radio">Yes
+                                <input type="radio" name="acknoledgementReceived" formControlName="acknoledgementReceived" value="Y"/>
+                                <div class="control__indicator"></div>
+                            </label>
+                            <label class="control control--radio">No
+                                <input type="radio" name="acknoledgementReceived" formControlName="acknoledgementReceived" value="N"/>
+                                <div class="control__indicator"></div>
+                            </label>
+                            <label class="control control--radio">Don't know
+                                <input type="radio" name="acknoledgementReceived" formControlName="acknoledgementReceived" value="D"/>
+                                <div class="control__indicator"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- end of div for edit required commercial settlement -->
+
+                    <!-- start div for actn details -->
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="remarksInResoDI">Remarks</label>
+                        <textarea formControlName="remarks" class="form-control hide-horizontal-scroll comment-box-textarea-style" readonly></textarea>
+                    </div>
+                    <!-- end of div for actn details -->
+
+                    <!--files-->
+                    <!--start div for show files-->
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="routeParam.complaintReferenceNo && fileDetails?.length>0">
+                        <label>Uploaded file(s)</label>
+                        <div *ngFor="let file of fileDetails">
+                            <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                            <br/>
+                        </div>
+                    </div>
+                    <!--end div for show files-->
+
+
+                    <!-- start div for Submit  and Cancel Button-->
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- start div for Cancel Button-->
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                            <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                                Cancel
+                            </button>
+                        </div>
+                        <!-- end div for Cancel Button-->
+                    </div>
+                    <!-- start div for Submit  and Cancel Button-->
+                </div>
+                <!-- end div for row complaint-form class-->
+            </form>
+            <!--end form for closeComplainDIFormGroup-->
+        </div>
+        <!--end form for caDIAddEditFormGroup-->
+        <!-- error msg div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="errorMsgObj.errMsgShowFlag">
+            <div class="alert alert-danger">
+                {{errorMsgObj.errorMsg}}&nbsp;
+                <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <br/>
+            <br/>
+        </div>
+        <!-- end of error msg div -->
+    </div>
+    <!-- end of div ca body-->
+</div>
+<!--end of div page-container-->
+
+<ispl-busy-spinner *ngIf="busySpinner"></ispl-busy-spinner>

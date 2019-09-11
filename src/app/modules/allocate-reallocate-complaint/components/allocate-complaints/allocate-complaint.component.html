@@ -1,0 +1,201 @@
+<div class="page-container">
+  <div>
+    <ol class="breadcrumb breadcrumb-custom">
+      <li class="breadcrumb-item">
+        <a href="#/home">
+          <i class="fa fa-home"></i> Home </a>
+      </li>
+      <li class="breadcrumb-item active">{{title}}</li>
+    </ol>
+  </div>
+
+  <!-- Write Your Code -->
+  <!-- start div for container -->
+  <div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12" style="width:100%;">
+
+    <!--start search div -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="input-group" style="width:100%;">
+          &nbsp;
+        </div>
+      </div>
+      <div [formGroup]="searchFormGroup" class="input-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: right;">
+        <input type="search" class="form-control search-input" formControlName="gridSearch" placeholder="Search">
+        <span class="input-group-addon">
+          <i class="fa fa-search"></i>
+        </span>
+      </div>
+    </div>
+    <!-- end of search div -->
+
+    <!--start div for action button-->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 60px; padding-bottom: 0px;">
+      <button *ngIf="viewEditParam === 'Edit'" type="button" class="btn btn-style2 cursor-pointer" (click)="editAllocateComplaint('Edit')"
+        [disabled]="selectedData.length !== 1">
+        <i class="fa fa-check-square-o" style="font-size: 13px; color: #FFFFFF"></i> Allocate Site Visit
+      </button>
+      <!-- <button *ngIf="viewEditParam === 'View'" type="button" class="btn btn-style2 cursor-pointer" (click)="editAllocateComplaint('View')"
+        [disabled]="selectedData.length !== 1">
+        <i class="fa fa-street-view" style="font-size: 13px; color: #FFFFFF"></i> View
+      </button> -->
+
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6" style="float:right;margin-right: -237px;" *ngIf="viewEditParam === 'Edit'">
+        <div style="display:inline-block;">
+          <span class="fixed-size-square" style="display:inline;"></span>
+          <span class="fixed-size-square-label" style="display:inline;">Allocated</span>
+        </div>
+        <div style="display:inline-block;margin-left: 10px;">
+          <span class="fixed-size-square2" style="display:inline;"></span>
+          <span class="fixed-size-square-label" style="display:inline;">Pending</span>
+        </div>
+
+
+      </div>
+
+      <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="float: right;"><span ></span></div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="float: right;"></div> -->
+      <!-- <span>Pending</span> -->
+    </div>
+    <!--end of div for action button-->
+
+    <!-- start table div -->
+    <div class="col-lg-12 col-md-12 col-xs-12" style="margin-bottom: 15px; margin-top: 5px;">
+      <table class="table-style">
+        <thead>
+          <tr class="th-style">
+            <td class="header-style-first"></td>
+            <td class="header-style hideextra" (click)="onClick(allocateComplaintDIViewDetails.header.complaintReferenceNo)">
+              {{allocateComplaintDIViewDetails.header?.complaintReferenceNo}}
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.complaintReferenceNo && sortSelection.orderType == 'ASC'"
+                class="fa fa-sort-asc">
+              </i>
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.complaintReferenceNo && sortSelection.orderType == 'DESC'"
+                class="fa fa-sort-desc">
+              </i>
+              <i *ngIf="sortSelection.orderType == ''" class="fa fa-sort">
+              </i>
+            </td>
+            <td class="header-style hideextra" (click)="onClick(allocateComplaintDIViewDetails.header.customerName)">
+              {{allocateComplaintDIViewDetails.header?.customerName}}
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.customerName && sortSelection.orderType == 'ASC'"
+                class="fa fa-sort-asc">
+              </i>
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.customerName && sortSelection.orderType == 'DESC'"
+                class="fa fa-sort-desc">
+              </i>
+              <i *ngIf="sortSelection.orderType == ''" class="fa fa-sort">
+              </i>
+            </td>
+            <td class="header-style hideextra" (click)="onClick(allocateComplaintDIViewDetails.header.loggedOnDt)">
+              {{allocateComplaintDIViewDetails.header?.loggedOnDt}}
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.loggedOnDt && sortSelection.orderType == 'ASC'"
+                class="fa fa-sort-asc">
+              </i>
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.loggedOnDt && sortSelection.orderType == 'DESC'"
+                class="fa fa-sort-desc">
+              </i>
+              <i *ngIf="sortSelection.orderType == ''" class="fa fa-sort">
+              </i>
+            </td>
+            <td class="header-style hideextra" (click)="onClick(allocateComplaintDIViewDetails.header.siteVisitDt)">
+              {{allocateComplaintDIViewDetails.header?.siteVisitDt}}
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.siteVisitDt && sortSelection.orderType == 'ASC'"
+                class="fa fa-sort-asc">
+              </i>
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.siteVisitDt && sortSelection.orderType == 'DESC'"
+                class="fa fa-sort-desc">
+              </i>
+              <i *ngIf="sortSelection.orderType == ''" class="fa fa-sort">
+              </i>
+            </td>
+            <td class="header-style hideextra" (click)="onClick(allocateComplaintDIViewDetails.header.siteVisitByName)">
+              {{allocateComplaintDIViewDetails.header?.siteVisitByName}}
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.siteVisitByName && sortSelection.orderType == 'ASC'"
+                class="fa fa-sort-asc">
+              </i>
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.siteVisitByName && sortSelection.orderType == 'DESC'"
+                class="fa fa-sort-desc">
+              </i>
+              <i *ngIf="sortSelection.orderType == ''" class="fa fa-sort">
+              </i>
+            </td>
+            <td class="header-style-last" (click)="onClick(allocateComplaintDIViewDetails.header.status)">
+              {{allocateComplaintDIViewDetails.header?.status}}
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.status && sortSelection.orderType == 'ASC'" class="fa fa-sort-asc">
+              </i>
+              <i *ngIf="sortSelection.sortData == allocateComplaintDIViewDetails.header?.status && sortSelection.orderType == 'DESC'" class="fa fa-sort-desc">
+              </i>
+              <i *ngIf="sortSelection.orderType == ''" class="fa fa-sort">
+              </i>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tr-style" *ngFor="let allocateComplaintViewValue of allocateComplaintDIViewDetails.details
+              | isplSearch: searchFormGroup.value.gridSearch : allocateComplaintDIViewDetails.header;" [ngClass]="{ odd: allocateComplaintViewValue.activityId == siteVisitByActivityId && viewEditParam === 'Edit' , even: allocateComplaintViewValue.activityId != siteVisitByActivityId || viewEditParam === 'View' || viewEditParam === 'Alert'}">
+            <!-- start ng-container for view or edit checkbox -->
+            <ng-container *ngIf="viewEditParam === 'Edit' then thenBlockOfModifyCheckbox; else elseBlockOfModifyCheckbox"></ng-container>
+            <!-- end of ng-container for view or edit checkbox -->
+            <!-- start ng-template for Modify Checkbox -->
+            <ng-template #thenBlockOfModifyCheckbox>
+              <ng-container *ngIf="allocateComplaintViewValue.siteVisit=='Y' then thenBlockOfCheckboxForSiteVisit; else elseBlockOfCheckboxForSiteVisit"></ng-container>
+              <ng-template #thenBlockOfCheckboxForSiteVisit>
+                <ng-container *ngIf="allocateComplaintViewValue.activityId<preliActivityId then thenBlockOfCheckboxForActivityId; else elseBlockOfCheckboxForActivityId"></ng-container>
+                <ng-template #thenBlockOfCheckboxForActivityId>
+                  <td class="td-style-first">
+                    <input type="checkbox" [checked]="otherCheck" (click)="complaintDetailsByCheckbox(allocateComplaintViewValue)" />
+                  </td>
+                </ng-template>
+                <ng-template #elseBlockOfCheckboxForActivityId>
+                  <td class="td-style-first"></td>
+                </ng-template>
+              </ng-template>
+              <ng-template #elseBlockOfCheckboxForSiteVisit>
+                <ng-container *ngIf="allocateComplaintViewValue.activityId<resoActivityId then thenBlockOfCheckboxForActivityIdSiteVisit; else elseBlockOfCheckboxForActivityIdSiteVisit"></ng-container>
+                <ng-template #thenBlockOfCheckboxForActivityIdSiteVisit>
+                  <td class="td-style-first">
+                    <input type="checkbox" [checked]="otherCheck" (click)="complaintDetailsByCheckbox(allocateComplaintViewValue)" />
+                  </td>
+                </ng-template>
+                <ng-template #elseBlockOfCheckboxForActivityIdSiteVisit>
+                  <td class="td-style-first"></td>
+                </ng-template>
+              </ng-template>
+            </ng-template>
+            <!-- end of ng-template for modify checkbox -->
+            <!-- start ng-template for view checkbox -->
+            <ng-template #elseBlockOfModifyCheckbox>
+              <td class="td-style-first">
+                <!-- <input type="checkbox" [checked]="otherCheck" (click)="complaintDetailsByCheckbox(allocateComplaintViewValue)" /> -->
+              </td>
+            </ng-template>
+            <!-- end of ng-template for view checkbox -->
+            <td class="td-style" *ngIf="viewEditParam === 'Edit'">
+              {{allocateComplaintViewValue.complaintReferenceNo}}
+            </td>
+            <td class="td-style" *ngIf="viewEditParam === 'View' || viewEditParam === 'Alert'">
+                <span class="custom-link" title="Click here" (click)="complaintDetailsByCheckbox(allocateComplaintViewValue,'View')">
+                  {{allocateComplaintViewValue.complaintReferenceNo}}
+                </span>
+            </td>
+
+            <td class="td-style">{{allocateComplaintViewValue.customerDetails.customerName}}</td>
+            <td class="td-style">{{allocateComplaintViewValue.loggedOnDt|date: 'dd-MMM-yyyy'}}</td>
+            <td class="td-style">{{allocateComplaintViewValue.siteVisitDt|date: 'dd-MMM-yyyy'}}</td>
+            <td class="td-style">{{allocateComplaintViewValue.siteVisitByName}}</td>
+            <td class="td-style-last">{{allocateComplaintViewValue.status}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- end of table div -->
+
+  </div>
+  <!-- end of div container -->
+</div>
+<!--end of page-container-->
+
+<ispl-busy-spinner *ngIf="!allocateComplaintDIViewDetails.header && !allocateComplaintDIViewDetails.details">
+
+</ispl-busy-spinner>

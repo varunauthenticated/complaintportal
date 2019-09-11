@@ -1,0 +1,104 @@
+<div style="margin: 1%;">
+  <!--class="dashboard-container"-->
+  <!-- Activiy Bar -->
+  <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 activityBar"><!--col-sm-10 col-md-10 col-lg-10-->
+    <div class="activity-item"><i class="fa fa-bookmark"></i> Quick Links</div>
+    <ng-container *ngIf="tempPlantType==='DI'">
+      <!--Add complaint-->
+      <div class="quick-links-add-icon-style" title="Add Complaint" (click)="onQuickLinkIconClick('add')"><i class="fa fa-plus"
+          style="color:#00ad21;" aria-hidden="true"></i></div>
+      <!-- complain view -->
+      <div class="quick-links-view-status-icon-style" title="View Complaint" (click)="onQuickLinkIconClick('view')"><i 
+        class="fa fa-clone" style="color:#3078be;" area-hidden="true"></i></div>
+      <!--status view-->
+      <div class="quick-links-view-icon-style" title="Activity Tracking" (click)="onQuickLinkIconClick('viewstatus')"><i
+        class="fa fa fa-building-o" style="color:#00ad21;" aria-hidden="true"></i></div>
+    </ng-container>
+    <!-- date range -->
+    <div class="quick-links-date-range-icon-style" title="Config Dashboard Tiles" (click)="openDateRangeModal();">
+      <i class="fa fa-cog" style="color:#3078be;" area-hidden="true"></i>
+    </div>
+  </div>
+  <!-- End Activiy Bar -->
+
+  <!-- Tiles Region -->
+  <div class="row col-xs-12 col-sm-10 col-md-10 col-lg-10 tiles-container">
+    <ng-container *ngIf="tempPlantType ==='ADMN'">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" [@DashboardTilesFlyInOutDelay0]>
+        <ispl-widget-tiles [tiles]='tiles1'></ispl-widget-tiles>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" [@DashboardTilesFlyInOutDelay2]>
+        <ispl-widget-tiles [tiles]='tiles3'></ispl-widget-tiles>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="tempPlantType!='ADMN'">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" [@DashboardTilesFlyInOutDelay0]>
+        <ispl-widget-tiles [tiles]='tiles1'></ispl-widget-tiles>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" [@DashboardTilesFlyInOutDelay1]>
+        <ispl-widget-tiles [tiles]='tiles2'></ispl-widget-tiles>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" [@DashboardTilesFlyInOutDelay2]>
+        <ispl-widget-tiles [tiles]='tiles3'></ispl-widget-tiles>
+      </div>
+    </ng-container>
+  </div>
+  <!-- end of tiles region -->
+
+  <!-- start div for showing report (chart) --><br/>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <ispl-widget-chart-report [chartData]='chartData' ></ispl-widget-chart-report>
+  </div>
+  <!-- end of div for showing report (chart) -->
+</div>
+
+<!-- start modal for date range -->
+<!-- add item modal -->
+<div *ngIf="dateRangeModalFlag" class="overlay"></div>
+<div *ngIf="dateRangeModalFlag" class="date-range-modal-style">
+  <!-- header div -->
+  <div class="modal-header">
+    <div> Config Dashboard Tiles </div>
+    <div (click)="cancelModal()" title="Close" style="cursor: pointer;">x</div>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <form [formGroup]="dateRangeFormGroup">
+        <div style="width:100%;">
+          <label>Configuration Type</label>
+          <select formControlName="configType" *ngFor="let a of dashboardConfigTilesModel" class="custom-select" style="width: 98%;">
+            <option [value]="a.key">
+              {{a.value}}
+            </option>
+          </select>
+        </div>
+        <br/>
+        <span style="width:100%;"><strong>Modify tiles date range</strong></span>
+        <div style="display: inline-flex; width: 100%">
+          <div style="width:50%;">
+            <span>From Date</span>
+            <input type="date" formControlName="fromDate" style="width: 95%;height: 65%;" (change)="compareTwoDates('fromDate')"/>
+          </div>
+          <div style="width:50%;">
+            <span>To Date</span>
+            <input type="date" formControlName="toDate" style="width: 95%;height: 65%;" (change)="compareTwoDates('fromDate')"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div style="float:right;margin-right: 3%;">
+      <button type="submit" class="btn btn-primary cursor-pointer" (click)="onDateRangeModalSubmit()" 
+      [disabled]=modalErrorMsgObj.modalErrMsgShowFlag>Update</button>
+     </div>
+     <!-- start err msg show div -->
+     <div *ngIf="modalErrorMsgObj.modalErrMsgShowFlag">
+        <div class="text-danger">
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          <b>{{modalErrorMsgObj.modalErrorMsg}}</b>&nbsp;
+        </div>
+      </div>
+      <!--end of err msg show div-->
+  </div>
+  <!-- end of body div -->
+</div>
+<!-- end of modal -->

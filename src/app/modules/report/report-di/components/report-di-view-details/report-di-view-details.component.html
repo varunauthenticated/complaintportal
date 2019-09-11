@@ -1,0 +1,114 @@
+<!-- start div for page-container class-->
+<div class="page-container">
+
+    <!-- start div for breadcrumb-->
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{ title }}</li>
+        </ol>
+    </div>
+    <!-- end div for breadcrumb-->
+
+    <!-- start div for complaintRegister body-->
+    <div>
+
+        <!-- start div for row complaint-form class-->
+        <div class="row complaint-form">
+            <!-- start div for complaint reference no-->
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                <label>Complaint Reference No: </label>
+                <label>{{complaintReferenceNo}}</label>
+            </div>
+            <!-- end div for complaint reference no-->
+            <!-- start div for complaint reference date-->
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                <label>Complaint Reference Date: </label>
+                <label>{{complaintDIViewDetails.complaintReferenceDt|date: 'dd-MMM-yyyy'}}</label>
+            </div>
+            <!-- end div for complaint reference date-->
+            <!-- start div for loggedOnDt-->
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                <label>Logged On Date: </label>
+                <label>{{complaintDIViewDetails.loggedOnDt|date: 'dd-MMM-yyyy'}}</label>
+            </div>
+            <!-- end div for loggedOnDt-->
+            <!-- start div for complaintTypeDesc-->
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                <label>Complaint Type: </label>
+                <label>{{complaintDIViewDetails.complaintTypeDesc}}</label>
+            </div>
+            <!-- end div for complaintTypeDesc-->            
+            <!-- start div for natureOfComplaintDesc-->
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                <label>Nature Of Complaint: </label>
+                <label>{{complaintDIViewDetails.natureOfComplaintDesc}}</label>
+            </div>
+            <!-- end div for natureOfComplaintDesc-->
+            <!-- start div for natureOfComplaintDesc-->
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" 
+            *ngIf="complaintReferenceNo!='' && 
+            complaintDIViewDetails.natureOfComplaintDesc === 'Others' &&
+            complaintDIViewDetails.complaintTypeDesc === 'Others' ">
+            <label>Details Of Complaint: </label>
+            <label>{{complaintDIViewDetails.complaintDetails}}</label>
+        </div>
+        <!-- end div for natureOfComplaintDesc-->
+        
+            <!-- start div for customerCode-->
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                    <label>Customer Code: </label>
+                    <label>{{custCode}}</label>
+                </div>
+                <!-- end div for customerCode-->
+                <!-- start div for customerName-->
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                    <label>Customer Name: </label>
+                    <label>{{custName}}</label>
+                </div>
+                <!-- end div for customerName-->
+                <!-- start div for salesGroup-->
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                    <label>Sales Group: </label>
+                    <label>{{salesGroup}}</label>
+                </div>
+                <!-- end div for salesGroup-->
+                <!-- start div for salesOffice-->
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo!=''">
+                    <label>Sales Office: </label>
+                    <label>{{salesOffice}}</label>
+                </div>
+                <!-- end div for salesOffice-->
+            
+        
+        
+            
+
+
+            <!-- start div for Submit  and Cancel Button-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- start div for Cancel Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn default-button-style" >
+                        Cancel
+                    </button>
+                </div>
+                <!-- end div for Cancel Button-->
+
+            </div>
+            <!-- start div for Submit  and Cancel Button-->
+
+        </div>
+        <!-- end div for row complaint-form class-->
+    </div>
+    <!-- end div for complaintRegister body-->
+
+</div>
+<!-- start div for page-container class-->
+
+<!-- start div for ispl-busy-spinner-->
+<ispl-busy-spinner *ngIf="busySpinner.busy"></ispl-busy-spinner>
+<!-- end div for ispl-busy-spinner-->

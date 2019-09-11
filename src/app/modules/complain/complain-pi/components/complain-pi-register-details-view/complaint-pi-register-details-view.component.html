@@ -1,0 +1,416 @@
+<!-- start div for page-container class-->
+<div class="page-container">
+
+    <!-- start div for breadcrumb-->
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </div>
+    <!-- end div for breadcrumb-->
+
+    <!--start process flow div-->
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 step-row" style="padding-left: 30px;padding-right: 30px;">
+        <ng-container *ngFor="let processData of processFlowData;let i = index;">
+            <!-- start div for active step -->
+            <div class="step-active step-col" style="display:inline-block;width: 16%;" *ngIf="i == processFlowPageIndex">
+                <p style="padding-top: 8px;text-align:center;color: white;font-size: 20px;" *ngIf="i == processFlowPageIndex">
+                    {{processData}}
+                </p>
+            </div>
+            <!-- end of div for active step -->
+            <!-- start div for inactive step -->
+            <div class="step-inactive step-col" style="display:inline-block;width: 16%;" *ngIf="i > processFlowPageIndex">
+                <p style="padding-top: 8px;text-align:center;color: #5a5d5f;font-size: 20px;" *ngIf="i > processFlowPageIndex">
+                    {{processData}}
+                </p>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- start div for complaintRegister body-->
+    <div>
+        <!--start form for complaintRegisterFormGroup-->
+        <form [formGroup]="complaintRegisterFormGroup" autocomplete="off">
+            <!-- start div for row complaint-form class-->
+            <div class="row complaint-form">
+                <!-- start div for complaint reference no-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Complaint Reference No</label>
+                    <input type="text" class="form-control" formControlName="complaintReferenceNo" readonly />
+                </div>
+                <!-- end div for complaint reference no-->
+
+                <!--start div for Complaint Received By-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Complaint Received By</label>
+                    <input type="text" class="form-control" formControlName="complaintReceivedById" readonly />
+                </div>
+                <!--end div for Complaint Received By-->
+
+
+                <!--start div for Department Name-->
+                <!-- <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Department Name</label>
+                    <input type="text" class="form-control" formControlName="departmentNameOther"
+                        readonly />
+                </div> -->
+                <!--end div for Department Name-->
+
+
+                <!--start div for Name-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Name</label>
+                    <input type="text" class="form-control" formControlName="complaintReceivedByName"
+                        readonly />
+                </div>
+                <!--end div for Name-->
+
+                <!--start div for Contact Person Email Id-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Personal Number</label>
+                    <input type="text" class="form-control" formControlName="complaintReceivedByPhoneNo"
+                        readonly />
+                </div>
+                <!--end div for Contact Person Email Id-->
+
+                <!-- start div for Complaint Reference Date-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Complaint Reference Date</label>
+                    <input type="text" class="form-control"
+                        formControlName="complaintReferenceDt" readonly />
+                </div>
+                <!--end div for Complaint Reference Date-->
+
+                <!-- start div for Mode of Receipt of Complaint-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label for="modeOfReceiptOfComplaint">Mode of Receipt of Complaint</label>
+                    <input type="text" class="form-control" formControlName="modeId" readonly />
+                </div>
+                <!-- end div for Mode of Receipt of Complaint-->
+
+                <!-- start div for cust code ,custname ,sales group, sales offcice -->
+                <ng-container *ngIf="selectedItemsGrid && selectedItemsGrid.length != 0">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label>Customer Code</label>
+                        <input type="text" class="form-control" formControlName="custCode" readonly />
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label>Customer Name</label>
+                        <input type="text" class="form-control" formControlName="custName" readonly />
+                    </div>                    
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label>Sales Group</label>
+                        <input type="text" class="form-control" formControlName="salesGroup" readonly />
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label>Sales Office</label>
+                        <input type="text" class="form-control" formControlName="salesOffice" readonly />
+                    </div>
+                </ng-container>
+                <!-- end div for cust code ,custname ,sales group, sales offcice -->
+
+
+                <!-- start div for Official Document No bubble  -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="selectedItemsGrid">
+                    <b>Selected Official Document No(s):</b><br />
+                    <div class="selected-data-div" style="display:inline-block;margin: 4px;" *ngFor="let selInv of selectedItemsGrid ">
+                        {{selInv.invoiceNo}}&nbsp;
+                    </div>
+                    <br />
+                    <br />
+                </div>
+                <!-- end div for Official Document No bubble -->
+
+                <!-- start div for  selected invoice details heading -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="selectedItemsGrid && selectedItemsGrid.length !== 0"
+                    style="text-align:center;">
+                    <span>
+                        <b>Selected Official Document Details:</b>
+                    </span>
+                </div>
+                <!-- end div for selected invoice details heading -->
+
+                <!-- start table div -->
+                <div class="col-lg-12 col-md-12 col-xs-12 scroll-bar" style="margin-bottom: 15px; margin-top: 5px;"
+                    *ngIf="selectedItemsGrid">
+                    <table class="table-style">
+                        <thead>
+                            <tr class="th-style">
+                                <td class="header-style-first hideextra">
+                                    {{itemsHeader?.invoiceNo}}
+                                </td>
+
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.invoiceDate}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.itemCode}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.itemName}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.batchNo}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.invoiceQtyInTons}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.complaintQtyInTons}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.usageGroup}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.stateOrRegion}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.poNo}}
+                                </td>
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.soNo}}
+                                </td>
+
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.inspectionVendorName}}
+                                </td>
+
+                                <td class="header-style hideextra">
+                                    {{itemsHeader?.loadingVendorName}}
+                                </td>
+                                <td class="header-style-last hideextra">
+                                    {{itemsHeader?.truckNo}}
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="tr-style" *ngFor=" let selItem of selectedItemsGrid
+                let odd = odd; let even = even;"
+                                [ngClass]="{even: even, odd: odd }">
+                                <td class="td-style-first">
+                                    {{selItem.invoiceNo}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.invoiceDate|date: 'dd-MMM-yyyy'}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.itemCode}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.itemName}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.batchNo}}
+                                </td>
+                                <td class="td-style hideextra number-align-style">
+                                    {{selItem.invoiceQtyInTons}}
+                                </td>
+                                <td class="td-style hideextra number-align-style">
+                                    {{selItem.complaintQtyInTons}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.usageGroup}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.stateOrRegion}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.poNo}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.soNo}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.inspectionVendorName}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{selItem.loadingVendorName}}
+                                </td>
+                                <td class="td-style-last hideextra">
+                                    {{selItem.truckNo}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--end table div-->
+
+                <!--end of new add for table-->
+
+
+                <!--start div for Contact Person Name-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Customer's Contact Person</label>
+                    <input type="text" class="form-control" formControlName="contactPersonName" readonly/>
+                </div>
+                <!--end div for Contact Person Name-->
+
+                <!--start div for Contact Person Phone No-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Phone No</label>
+                    <input type="text" class="form-control" formControlName="contactPersonPhoneNo" readonly/>
+                </div>
+                <!--end div for Contact Person Phone No-->
+
+                <!--start div for Contact Person Email Id-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Email Id</label>
+                    <input type="text" class="form-control" formControlName="contactPersonEmailId" readonly/>
+                </div>
+                <!--end div for Contact Person Email Id-->
+
+                <!--start div for Complaint Logged By-->                
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Complaint Logged By</label>
+                    <input type="text" class="form-control" formControlName="loggedBy" readonly/>
+                </div>                
+                <!--end div for Complaint Logged By-->
+
+                <!--start div for Complaint Logged On-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Complaint Logged On</label>
+                    <input type="text" class="form-control" formControlName="loggedOnDt"
+                        readonly />
+                </div>
+                <!--end div for Complaint Logged On-->
+
+                <!--start div for Complaint Type-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Complaint Type</label>
+                    <input type="text" class="form-control" formControlName="complaintTypeId" readonly />
+                </div>
+                <!--end div for Complaint Type-->
+
+                <!--start div for Nature of Complaint-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Nature of Complaint</label>
+                    <input type="text" class="form-control" formControlName="natureOfComplaintId" readonly />
+                </div>
+                <!--end div for Nature of Complaint-->
+
+                <!--start div for Detail of Complaint-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <!--start div for Detail of Complaint-->
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display:inline-block;padding-left:0px;vertical-align:top;">
+                        <label>Detail of Complaint</label>
+                        <textarea rows="5" class="form-control hide-horizontal-scroll" formControlName="complaintDetails" readonly></textarea>
+                    </div>
+                    <!--end div for Detail of Complaint-->
+                </div>
+                <!--start div for Detail of Complaint-->
+
+                <!--start div for Severity Index Ratings-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <label>Customer Segment</label>
+                    <input type="text" class="form-control" formControlName="severityIndexRating" readonly />
+                </div>
+                <!--end div for Severity Index Ratings-->
+
+                <!--start div for Repeated Complaint for radio button and Previous Complaint Reference No-->
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!--start div for Repeated Complaint for radio button-->
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" style="display:inline-block;padding-left:0px;">                       
+                            <div style="display:inline-block;">
+                                <label>Repeated Complaint</label>
+                                
+                                <label class="control control--radio">Yes
+                                    <input type="radio" name="repeatedComplaint" formControlName="repeatedComplaint"
+                                        value="Y" />
+                                    <div class="control__indicator"></div>
+                                </label>
+                            </div>
+                            <div style="display:inline-block;">
+                                <label class="control control--radio">No
+                                    <input type="radio" name="repeatedComplaint" formControlName="repeatedComplaint"
+                                        value="N" />
+                                    <div class="control__indicator"></div>
+                                </label>
+                            </div>                        
+                    </div>
+                    <!--end div for radio button-->
+
+                        <!-- start div for Previous Complaint Reference No-->
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" style="display:inline-block;padding-left:0px;">
+                            <label>Previous Complaint Reference No</label>
+                            <input type="text" class="form-control" 
+                                formControlName="previousComplaintReferenceNo" readonly/>
+                        </div>
+                        <!-- end div for Previous Complaint Reference No -->                    
+                </div>
+                <!--end div for Repeated Complaint for radio button and Previous Complaint Reference No-->
+
+
+                <!-- start div for edit required comercial settlement  -->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Customer may require commercial settlement</label>
+                        
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="commercialSettlementRadioBtn"
+                                formControlName="commercialSettlementRadioBtn" value="Y"
+                                 />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="commercialSettlementRadioBtn"
+                                formControlName="commercialSettlementRadioBtn" value="N"
+                                 />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+                <!-- end of div for edit required commercial settlement -->
+
+                <!--start div for show files-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="selectedComplaintReferenceDetails.files?.length!=0">
+                    <label>Uploaded file(s)</label>
+                    <div *ngFor="let file of selectedComplaintReferenceDetails.files">
+                        <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                        <br />
+                    </div>
+                </div>
+                <!--end div for show files-->
+
+                <!-- start div for Submit  and Cancel Button-->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- start div for Cancel Button-->
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                        <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                            Cancel
+                        </button>
+                    </div>
+                    <!-- end div for Cancel Button-->
+                </div>
+                <!-- start div for Submit  and Cancel Button-->
+            </div>
+            <!-- end div for row complaint-form class-->
+        </form>
+        <!--end form for complaintRegisterFormGroup-->
+        <!-- error msg div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="errorObj.errorMsgShowFlag">
+            <div class="alert alert-danger">
+                {{errorObj.errorMsg}}&nbsp;
+                <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- end of error msg div -->
+
+    </div>
+    <!-- end div for complaintRegister body-->
+
+</div>
+<!-- start div for page-container class-->
+
+<ispl-busy-spinner *ngIf="busySpinner">
+</ispl-busy-spinner>

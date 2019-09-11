@@ -1,0 +1,72 @@
+/* start style for demo navbar */
+.custom-nav {
+  box-shadow: 0px 5px 10px #A5A5A5;
+  background-color: #343740 !important;
+  opacity: 0.9;
+}
+
+.dropdown-menu {
+  background-color: #fff;
+  border-bottom: 5px solid #20A6EE;
+  box-shadow: 0px 10px 20px #9C9C9C;
+}
+
+
+.multi-column-dropdown li a {
+  display: block;
+  clear: both;
+  line-height: 1.428571429;
+  color: #333;
+  white-space: normal;
+}
+
+/* end of style for demo navbar */
+
+
+.dashboard-container {
+  margin-top: 85px;
+}
+
+.activityBar {
+  /*position: absolute;
+  left: 340px;
+  top: 100px;*/
+  height: 75px;
+  background-color: white;
+  box-shadow: 1px 1px 15px #949494;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #B1B1B1;
+  text-align: center;
+  float: none;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.tiles-container {
+  float: none;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.activity-item {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 20px;
+  font-size: 20px;
+  font-style: normal;
+  font-variant: normal;
+  color: #444444
+}
+
+.icon-holder {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  height: 65px;
+  width: 65px;
+  background: #73AD21;
+  cursor: pointer;
+}

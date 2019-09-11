@@ -1,0 +1,275 @@
+<!-- start div for page-container class-->
+<div class="page-container">
+
+  <!-- start div for breadcrumb-->
+  <div>
+    <ol class="breadcrumb breadcrumb-custom">
+      <li class="breadcrumb-item">
+        <a href="#/home">
+          <i class="fa fa-home"></i> Home </a>
+      </li>
+      <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+  </div>
+  <!-- end div for breadcrumb-->
+
+  <!--start process flow div-->
+  <app-flowmangement [complainNo]="routeParam.complaintReferenceNo" [complianStatus]="routeParam.complaintStatus" [pageType]="'view'"></app-flowmangement>
+  <!-- end div of process flow  -->
+
+  <!-- start div for complaintRegister body-->
+  <div>
+    <!-- start table div -->
+    <div *ngIf="complainDetails.length > 1" class="col-lg-12 col-md-12 col-xs-12 scroll-bar grid-table-style" style="margin-top: 5px;">
+      <table class="table-style">
+        <thead>
+          <tr class="th-style">
+            <td class="header-style-first">Select</td>
+            <td class="hideextra" *ngFor="let invRprt of prevComplainReportTable" [ngClass]="invRprt.headerClass">
+              {{ invRprt.headerDesc }}
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr class="tr-style" *ngFor="let compDet of complainDetails; let cmpIndex = index;">
+            <td class="td-style-first" style="cursor: pointer;" (click)="selectData(cmpIndex)">
+              <i class="fa" [ngClass]="complainIndex == cmpIndex ? 'fa-dot-circle-o' : 'fa-circle-o'"></i>
+            </td>
+            <td class="hideextra" *ngFor="let invRprt of prevComplainReportTable" [ngClass]="invRprt.dataClass">
+              {{ compDet[invRprt.headerKey] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--end table div-->
+
+    <div class="complaint-form">
+      <!--form for complaintRegisterFormGroup-->
+      <form *ngIf="complaintRegisterFormGroup" [formGroup]="complaintRegisterFormGroup" autocomplete="off">
+        <!-- start div for row complaint-form class-->
+        <div class="row">
+          <!-- start div for complaint reference no-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="routeParam.complaintReferenceNo">
+            <label>Complaint Reference No</label>
+            <input type="text" class="form-control" [value]="routeParam.complaintReferenceNo" readonly/>
+          </div>
+          <!-- end div for complaint reference no-->
+
+          <!-- start div for Compliant Reference Date-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label for="compliantReferenceDateTime">Compliant Reference Date</label>
+            <input type="text" class="form-control date-picker-height" formControlName="complaintReferenceDt" readonly/>
+          </div>
+          <!--end div for Compliant Reference Date-->
+
+          <!-- start div for Mode of Receipt of Complaint-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label for="modeOfReceiptOfComplaint">Mode of Receipt of Complaint</label>
+            <input type="text" class="form-control" formControlName="modeId" readonly/>
+          </div>
+          <!-- end div for Mode of Receipt of Complaint-->
+
+          <!-- start div for cust code ,custname ,sales group, sales offcice -->
+          <ng-container>
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label>Customer Code</label>
+              <input type="text" class="form-control" formControlName="custCode" readonly/>
+            </div>
+
+
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label>Customer Name</label>
+              <input type="text" class="form-control" formControlName="custName" readonly/>
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label>Sales Group</label>
+              <input type="text" class="form-control" formControlName="salesGroup" readonly/>
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label>Sales Office</label>
+              <input type="text" class="form-control" formControlName="salesOffice" readonly/>
+            </div>
+          </ng-container>
+          <!-- end div for cust code ,custname ,sales group, sales office -->
+
+          <!-- start div for Official Document No bubble  -->
+          <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <b>Selected Official Document No(s):</b>
+            <br/>
+            <div class="faceted-data-div" style="display:inline-block;margin: 4px;">
+              &nbsp;
+            </div>
+            <br/>
+          </div> -->
+          <!-- end div for Official Document No bubble -->
+
+          <!-- start div for  selected invoice details heading -->
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:center;">
+            <span>
+              <b>Selected Official Document Details:</b>
+            </span>
+          </div>
+          <!-- end div for selected invoice details heading -->
+
+          <!-- start table div -->
+          <div class="col-lg-12 col-md-12 col-xs-12 scroll-bar">
+            <table class="table-style">
+              <thead>
+                <tr class="th-style">
+                  <td class="hideextra" *ngFor="let invItem of  itemGridTable" [ngClass]="invItem.headerClass">
+                    {{ invItem.headerDesc }}
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="tr-style" *ngFor="let invItemDet of invItemDetails">
+                  <td class="hideextra" *ngFor="let itmGrid of itemGridTable" [ngClass]="itmGrid.dataClass">
+                    <ng-container *ngIf="itmGrid.headerKey == 'invoiceDate'">{{ invItemDet[itmGrid.headerKey] | date:'dd-MMM-yyyy' }}</ng-container>
+                    <ng-container *ngIf="itmGrid.headerKey !='invoiceDate'">{{ invItemDet[itmGrid.headerKey] }}</ng-container>
+                    <!-- {{ invItemDet[itmGrid.headerKey] }} -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--end table div-->
+
+          <!--start div for Contact Person Name-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label for="contactPersonName">Customer's Contact Person</label>
+            <input type="text" class="form-control" formControlName="contactPersonName" readonly/>
+          </div>
+          <!--end div for Contact Person Name-->
+
+          <!--start div for Contact Person Phone No-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label for="contactPersonPhoneNo">Phone No</label>
+            <input type="text" class="form-control" formControlName="contactPersonPhoneNo" readonly/>
+          </div>
+          <!--end div for Contact Person Phone No-->
+
+          <!--start div for Contact Person Email Id-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label for="contactPersonEmailId">Email Id</label>
+            <input type="text" class="form-control" formControlName="contactPersonEmailId" readonly/>
+          </div>
+          <!--end div for Contact Person Email Id-->
+
+          <!--start div for Complaint Type-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label>Complaint Type</label>
+            <input type="text" class="form-control" formControlName="complaintTypeId" readonly/>
+          </div>
+          <!--end div for Complaint Type-->
+
+          <!--start div for Nature of Complaint-->
+          <div disabled class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label>Nature of Complaint</label>
+            <input type="text" class="form-control" formControlName="natureOfComplaintId" readonly/>
+          </div>
+          <!--end div for Nature of Complaint-->
+
+          <!--start div for Detail of Complaint-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label for="detailOfComplaint">Detail of Complaint</label>
+            <textarea rows="5" class="form-control hide-horizontal-scroll" formControlName="complaintDetails" readonly></textarea>
+          </div>
+          <!--end div for Detail of Complaint-->
+
+          <!--start div for Complaint Logged By-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label>Complaint Logged By</label>
+            <input type="text" class="form-control" formControlName="loggedBy" readonly/>
+          </div>
+          <!--end div for Complaint Logged By-->
+
+          <!--start div for Complaint Logged On-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label>Complaint Logged On</label>
+            <input type="text" class="form-control date-picker-height" formControlName="loggedOnDt" readonly/>
+          </div>
+          <!--end div for Complaint Logged On-->
+
+          <!--start div for radio button-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <ng-container>
+              <div style="display:inline-block;">
+                <label>Site Visit Required</label>
+                <label class="control control--radio">Yes
+                  <input type="radio" name="siteVisit" formControlName="siteVisit" value="Y" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+              <div style="display:inline-block;">
+                <label class="control control--radio">No
+                  <input type="radio" name="siteVisit" formControlName="siteVisit" value="N" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+            </ng-container>
+          </div>
+          <!--end div for radio button-->
+
+          <!--start ng-container for site visit date and siteVisitValue = Y-->
+          <!-- start div for site visit by department name -->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="siteVisitValue==='Y'">
+            <label for="siteVisitBy">Site Visit By</label>
+            <input type="text" class="form-control" formControlName="siteVisitByDepartmentName" readonly/>
+          </div>
+          <!-- end of div for site visit by department name -->
+
+          <!--start div for show files-->
+          <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="routeParam.complaintReferenceNo && fileDetails?.length>0">
+            <label>Uploaded file(s)</label>
+            <div *ngFor="let file of fileDetails">
+              <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+              <br/>
+            </div>
+          </div>
+          <!--end div for show files-->
+
+
+          <!-- start div for Submit  and Cancel Button-->
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- start div for Cancel Button-->
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+              <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                Cancel
+              </button>
+            </div>
+            <!-- end div for Cancel Button-->
+
+          </div>
+          <!-- start div for Submit  and Cancel Button-->
+
+        </div>
+        <!-- end div for row complaint-form class-->
+      </form>
+      <!--end form for complaintRegisterFormGroup-->
+    </div>
+    <!-- error msg div -->
+    <br/>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="errorMsgObj.errMsgShowFlag">
+      <div class="alert alert-danger">
+        {{errorMsgObj.errorMsg}}&nbsp;
+        <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <br/>
+      <br/>
+    </div>
+    <!-- end of error msg div -->
+  </div>
+  <!-- end div for complaintRegister body-->
+
+</div>
+<!-- start div for page-container class-->
+
+<!-- start div for ispl-busy-spinner-->
+<ispl-busy-spinner *ngIf="busySpinner"></ispl-busy-spinner>
+<!-- end div for ispl-busy-spinner-->

@@ -1,0 +1,14 @@
+<!--start process flow div-->
+<div *ngIf="flowStructureList" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 step-row" style="padding-left: 30px;padding-right: 30px;">
+  <ng-container *ngFor="let processData of flowStructureList; let i = index;">
+    <!-- start div for active step -->
+    <div class="step-col" style="display:inline-block; width: 16%;" [ngClass]="processData?.flowClass">
+      <p style="padding-top: 8px;text-align:center;">
+        <a style="color:white;font-size: 80%;word-break: break-word;font-family: arial;" *ngIf="processData.isRoutable" [href]="processData.route">{{processData?.flowName}}</a>
+        <span style="color: #2084A4;font-size: 80%;word-break: break-word;font-family: arial;" *ngIf="!processData.isRoutable">{{processData?.flowName}}</span>
+      </p>
+    </div>
+
+  </ng-container>
+</div>
+<!--end flow-->

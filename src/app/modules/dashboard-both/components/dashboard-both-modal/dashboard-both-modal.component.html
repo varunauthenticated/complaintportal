@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h4 class="modal-title">Information</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeClick();">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <!-- start div to add Plant type change -->
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div style="display:inline-block;">
+            <label>Choose Plant Type</label>
+            <label class="red-asterick">*</label>
+            <label class="control control--radio">DI
+                <input type="radio" name="plantTypeRadioName" value="DI" (click)="onPlantTypeRadioClick('DI')" />
+                <div class="control__indicator"></div>
+            </label>
+        </div>
+        <div style="display:inline-block;">
+            <label class="control control--radio">PI
+                <input type="radio" name="plantTypeRadioName" value="PI" (click)="onPlantTypeRadioClick('PI')" />
+                <div class="control__indicator"></div>
+            </label>
+        </div>
+    </div>
+    <!-- end of div to add Plant type change -->
+    <div class="change-plant-busy" *ngIf="changePlantBusy;else elseBlockOfShowMsg">
+        <div style="color:#2C354B">
+            <i class="fa fa-spinner fa-spin"></i>
+           Please wait...
+        </div>
+    </div>
+    <ng-template #elseBlockOfShowMsg>
+        <div class="change-plant-busy">
+            <i class="fa fa-exclamation-circle"></i>
+            Please choose plant.
+        </div>
+    </ng-template>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="dashboardModalSubmit();" [disabled]="!plantTypeRadioValue">Submit</button>
+    <button type="button" class="btn btn-secondary" (click)="closeClick();">Close</button>
+</div>

@@ -1,0 +1,308 @@
+<div class="page-container" style="padding-bottom: 20px;">
+  <div>
+    <ol class="breadcrumb breadcrumb-custom">
+      <li class="breadcrumb-item">
+        <a href="#/home">
+          <i class="fa fa-home"></i> Home </a>
+      </li>
+      <li class="breadcrumb-item active">{{title}}</li>
+    </ol>
+  </div>
+  <!--start process flow div-->
+  <app-flowmangement [complainNo]="complaintReferenceNo" [complianStatus]="complaintStatus" [pageType]="'view'"></app-flowmangement>
+  <!-- end div of process flow  -->
+
+  <!-- main div -->
+  <div>
+    <!-- main div -->
+    <div class="form-div-style">
+      <!-- start table div -->
+      <div *ngIf="invReportDetails.length > 1" class="col-lg-12 col-md-12 col-xs-12 scroll-bar prev-inv-report-table-style">
+        <table class="table-style">
+          <thead>
+            <tr class="th-style">
+              <td class="header-style-first">Select</td>
+              <td class="hideextra" *ngFor="let invRprt of  invReportTable" [ngClass]="invRprt.headerClass">
+                {{ invRprt.headerDesc }}
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tr-style" *ngFor="let invReportDet of invReportDetails; let invRepIndex = index;">
+              <td class="td-style-first" style="cursor: pointer;" (click)="selectData(invRepIndex)">
+                <i class="fa" [ngClass]="invReportIndex == invRepIndex ? 'fa-dot-circle-o' : 'fa-circle-o'"></i>
+              </td>
+
+              <td class="hideextra" *ngFor="let invRprt of invReportTable" [ngClass]="invRprt.dataClass">
+                <ng-container *ngIf="invRprt.headerKey == 'investigationReportDate'">{{ invReportDet[invRprt.headerKey] |
+                  date:'dd-MMM-yyyy' }}</ng-container>
+                <ng-container *ngIf="invRprt.headerKey !='investigationReportDate'">{{ invReportDet[invRprt.headerKey] }}</ng-container>
+                <!-- {{ invReportDet[invRprt.headerKey] }} -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--end table div-->
+
+      <!-- new add for reject reason -->
+      <div class="alert alert-danger" *ngIf="invRejectReason" style="margin-right: 29px;margin-left: 30px;">
+        <h4 style="color: #ef0600;font-size: 15px;">Reason to Re-investigate :</h4>
+        <div>
+          {{invRejectReason}}
+        </div>
+      </div>
+      <!-- end of reject reason -->
+
+      <!-- start div of form -->
+      <div style="margin-top: 10px; margin-bottom: 30px;">
+        <!--start form -->
+        <form [formGroup]="invReportFormGroup" autocomplete="off">
+          <!--start div of row manage profile form-->
+          <div class="row inv-report-form-style">
+            <!-- start div for Complaint Reference No [View] -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo">
+              <label for="complaintReferenceNo">Complaint Reference No </label>
+              <input type="text" class="form-control" formControlName="complaintReferenceNo" readonly>
+            </div>
+            <!-- end div for Complaint Reference No [View] -->
+
+            <!-- start div of Site Visit Made radio button -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <div style="display:inline-block;">
+                <label>Site Visit Made</label>
+                <label class="control control--radio">Yes
+                  <input type="radio" name="siteVisitMade" formControlName="siteVisitMade" value="Y" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+              <div style="display:inline-block;">
+                <label class="control control--radio">No
+                  <input type="radio" name="siteVisitMade" formControlName="siteVisitMade" value="N" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+            </div>
+            <!-- end div of Site Visit Made requied -->
+
+            <!-- start div for site visit Date -->
+            <ng-container *ngIf="invReportVar.siteVisitMadeValue === 'Y'">
+              <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="siteVisitDate">Site Visit Date</label>
+                <input type="text" class="form-control" formControlName="siteVisitDate" readonly>
+              </div>
+            </ng-container>
+            <!-- end div for site visit Date -->
+
+            <!-- start div of Sample Collected radio button -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <div style="display:inline-block;">
+                <label>Sample Collected</label>
+                <label class="control control--radio">Yes
+                  <input type="radio" name="sampleCollected" formControlName="sampleCollected" value="Y" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+              <div style="display:inline-block;">
+                <label class="control control--radio">No
+                  <input type="radio" name="sampleCollected" formControlName="sampleCollected" value="N" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+            </div>
+            <!-- end div of Sample Collected-->
+
+            <!-- start div for Sample Collected Date -->
+            <ng-container *ngIf="invReportVar.sampleCollectedValue === 'Y'">
+              <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="sampleCollectedDate">Sample Collected Date</label>
+                <input type="text" class="form-control" formControlName="sampleCollectedDate" readonly/>
+              </div>
+            </ng-container>
+            <!-- end div for Sample Collected Date -->
+
+            <!-- start div for Investigation Report Date -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label>From Date</label>
+              <input type="text" class="form-control" formControlName="investigationReportFromDate" readonly>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label>To Date</label>
+              <input type="text" class="form-control" formControlName="investigationReportToDate" readonly>
+            </div>
+            <!-- end div for Investigation Report Date -->
+
+            <!-- start table div -->
+            <div class="col-lg-12 col-md-12 col-xs-12 scroll-bar">
+              <table class="table-style">
+                <thead>
+                  <tr class="th-style">
+                    <td class="hideextra" *ngFor="let invItem of  itemGridTable" [ngClass]="invItem.headerClass">
+                      {{ invItem.headerDesc }}
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="tr-style" *ngFor="let invItemDet of invItemDetails">
+                    <td class="hideextra" *ngFor="let itmGrid of itemGridTable" [ngClass]="itmGrid.dataClass">
+                      <ng-container *ngIf="itmGrid.headerKey == 'invoiceDate'">{{ invItemDet[itmGrid.headerKey] | date:'dd-MMM-yyyy'
+                        }}</ng-container>
+                      <ng-container *ngIf="itmGrid.headerKey !='invoiceDate'">{{ invItemDet[itmGrid.headerKey] }}</ng-container>
+
+                      <!-- {{ invItemDet[itmGrid.headerKey] }} -->
+                      <!--invoiceDate-->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--end table div-->
+
+            <!--start div for Unloading Equipment [view]-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label>Unloading Equipment :</label>
+              <div *ngFor="let unloadingEquipment of selectedIvtReportDataList.unloadingEquipmentDesc">
+                <i class="fa fa-check-square"></i> {{unloadingEquipment}}
+              </div>
+              <!-- <ul class="list-group ul-style">
+                <li class="list-group-item li-style" *ngFor="let unloadingEquipment of selectedIvtReportDataList.unloadingEquipmentDesc">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" formControlName="unloadingEquipment" [checked]="true" />
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">
+                      {{unloadingEquipment}}
+                    </span>
+                  </label>
+                </li>
+              </ul> -->
+            </div>
+            <!--end div for Unloading Equipment [view]-->
+
+            <!--start div for Lubricant Used [view]-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label>Lubricant Used :</label>
+              <div *ngFor="let lubricantUsed of selectedIvtReportDataList.lubricantUsedDesc">
+                <i class="fa fa-check-square"></i> {{lubricantUsed}}
+              </div>
+              <!-- <ul class="list-group ul-style">
+                <li class="list-group-item li-style" *ngFor="let lubricantUsed of selectedIvtReportDataList.lubricantUsedDesc">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" formControlName="lubricantUsed" [checked]="true" />
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">
+                      {{lubricantUsed}}
+                    </span>
+                  </label>
+                </li>
+              </ul> -->
+            </div>
+            <!--end div for Lubricant Used [view]-->
+
+            <!--start div for Unloading Equipment [view]-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label for="stencil">Laying Position :</label>
+              <div *ngFor="let layingPosition of selectedIvtReportDataList.layingPositionDesc">
+                <i class="fa fa-check-square"></i> {{layingPosition}}
+              </div>              
+            </div>
+            <!--end div for Unloading Equipment [view]-->
+
+            <!--start div for Unloading Equipment [view]-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <label for="stencil">Jointing Type :</label>
+              <div *ngFor="let jointingType of selectedIvtReportDataList.jointingTypeDesc">
+                <i class="fa fa-check-square"></i> {{jointingType}}
+              </div>             
+            </div>
+            <!--end div for Unloading Equipment [view]-->
+
+            <!-- start div of complaint accept radio button -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+              <div style="display:inline-block;">
+                <label>Complaint</label>
+                <label class="control control--radio">Accepted
+                  <input type="radio" name="complaintAccepted" formControlName="complaintAccepted" value="Y" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+              <div style="display:inline-block;">
+                <label class="control control--radio">Not Accepted
+                  <input type="radio" name="complaintAccepted" formControlName="complaintAccepted" value="N" />
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+            </div>
+            <!-- end div of complaint accept-->
+
+            <!-- start inv report remarks textarea div -->
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <label>Remarks</label>
+              <textarea class="form-control comment-box-textarea-style" formControlName="invReportRemarks" readonly></textarea>
+            </div>
+            <!-- end of inv report remarks textarea div -->
+
+            <!--files-->
+            <!--start div for show files-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo && fileDetails?.length>0">
+              <label>Uploaded file(s)</label>
+              <div *ngFor="let file of fileDetails">
+                <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                <br/>
+              </div>
+            </div>
+            <!--end div for show files-->
+            <div class="row" *ngIf="rejectFlag" class="reject-alert">
+              <h4 style="color: #aa6708">Reason to Re-investigate</h4>
+              <div>
+                <textarea class="reject-alert-textarea" #rejectReasonVal></textarea>
+              </div>
+              <div style="margin-top: 8px; padding-right: 24px;">
+                <button type="submit" style="width: 280px; float: right; background: #aa6708;" class="btn primary-button-style" (click)="onRejectSubmit(rejectReasonVal.value)">
+                  Re-investigate Investigation Report
+                </button>
+              </div>
+            </div>
+
+          </div>
+          <!--end of div row manage profile form-->
+        </form>
+        <!--end form -->
+
+        <!--start button div-->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div style="margin-left: 14px" class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+            <button type="submit" class="btn default-button-style" (click)="onCancel()">
+              Cancel
+            </button>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder" *ngIf="!rejectFlag && complaintStatus==50">
+            <!--&& complaintStatus==50-->
+            <button type="submit" class="btn btn-danger danger-button-style" (click)="onClickRejectBtn()">
+              Re-investigate
+            </button>
+          </div>
+        </div>
+        <!--end of button div-->
+      </div>
+      <!-- end div of form -->
+
+      <!-- error msg div -->
+      <br/>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="errorMsgObj.errMsgShowFlag">
+        <div class="alert alert-danger">
+          {{errorMsgObj.errorMsg}}&nbsp;
+          <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick()">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <br/>
+        <br/>
+      </div>
+      <!-- end of error msg div -->
+    </div>
+    <!-- end of main div -->
+  </div>
+  <!--end of page-container-->
+
+  <!--spinner-->
+  <ispl-busy-spinner *ngIf="busySpinner"></ispl-busy-spinner>

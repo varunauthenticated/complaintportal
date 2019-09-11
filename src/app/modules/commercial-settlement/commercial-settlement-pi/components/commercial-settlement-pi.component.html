@@ -1,0 +1,266 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">Commercial Settlement</li>
+        </ol>
+    </div>
+    <!--start form for commerCialSettlementFromGroup-->
+    <form [formGroup]="commerCialSettlementFromGroup" autocomplete="off" (ngSubmit)="commercialSettlementPISubmit()">
+        
+        <!-- start div for row complaint-form class-->
+        <div class="row form-style">
+            <!--start div complaint reference no -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="complaintReferenceNo">Complaint Reference No</label>
+                <input type="text" class="form-control" formControlName="complaintReferenceNo" readonly="readonly" />
+            </div>
+            <!--end of div for complaint reference no-->
+
+            <!--start div settlement Request Date-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label>Settlement Request Date</label>
+                <input type="text" class="form-control" formControlName="date" readonly="readonly" />
+            </div>
+            <!--end of div for Settlement Request Date-->
+            <!--start div compensation Cost-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label>Total Compensation Cost</label>
+                <input type="text" class="form-control number-align-style" formControlName="totalCompensationAmount" readonly="readonly" />
+            </div>
+            <!--end of div for compensation cost-->
+
+            <!--start div Customer Code-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label>Customer Code</label>
+                <input type="text" class="form-control" formControlName="customerCode" readonly="readonly" />
+            </div>
+            <!--end of div for Customer Code-->
+             <!--start div Customer Name-->
+             <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label>Customer Name</label>
+                <input type="text" class="form-control" formControlName="customerName" readonly="readonly" />
+            </div>
+            <!--end of div for Customer Name-->
+             <!--start div Sales Group-->
+             <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label>Sales Group</label>
+                <input type="text" class="form-control" formControlName="salesGroup" readonly="readonly" />
+            </div>
+            <!--end of div for Sales Group-->
+             <!--start div Sales Office-->
+             <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label>Sales Office</label>
+                <input type="text" class="form-control" formControlName="salesOffice" readonly="readonly" />
+            </div>
+            <!--end of div for Sales Office-->
+
+             <!-- start div to show the previous comm sett data -->
+             <ng-container  *ngIf="previousCommSettDetArr.length > 0">
+                    <div class="alert alert-info col-lg-12 col-sm-12 col-md-12 col-xs-12 " *ngFor="let prevCommSettEl of previousCommSettDetArr">
+                        <span class="info-header-font-style">Action:</span> <span class="info-body-font-style">{{prevCommSettEl.action}}</span>&nbsp;&nbsp;&nbsp;
+                        <span class="info-header-font-style">Date:</span> <span class="info-body-font-style">{{prevCommSettEl.commercialSettlementDate}}</span>&nbsp;&nbsp;&nbsp;
+                        <span class="info-header-font-style">{{prevCommSettEl.makerLabelName}}</span> <span class="info-body-font-style">{{prevCommSettEl.makerName}}</span><br/>
+                        <span class="info-header-font-style">Remarks:</span> <span class="info-body-font-style">{{prevCommSettEl.remarks}}</span>
+                        <br/><span class="info-header-font-style">Uploaded File(s):</span>
+                        <span class="info-body-font-style">
+                            <div *ngFor="let prevFile of prevFileArr">
+                                <ng-container *ngIf="prevCommSettEl.commercialSettlementAutoId == prevFile.commercialSettlementAutoId">
+                                    <a href="{{prevFile.fileUrl}}" target="_blank">{{prevFile.fileName}} </a>
+                                </ng-container>
+                            </div>
+                        </span>
+                    </div><br/>
+                </ng-container>
+                <!-- end of div to show the previous comm sett data -->
+
+            <!-- start div for complaintQty error -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <ng-container *ngFor=" let itemDetElErr of itemDetails">
+                    <div class="alert alert-danger" *ngIf="itemDetElErr.compensationQtyErrFlag && itemDetElErr.compensationQtyErrDesc">
+                        Official Document No:
+                        <b>{{ itemDetElErr.invoiceNo }}</b>, error: {{ itemDetElErr.compensationQtyErrDesc }}
+                    </div>
+                    <div class="alert alert-danger" *ngIf="itemDetElErr.itemRateErrFlag && itemDetElErr.itemRateErrDesc">
+                        Official Document No:
+                        <b>{{ itemDetElErr.invoiceNo }}</b>, error: {{ itemDetElErr.itemRateErrDesc }}
+                    </div>
+                </ng-container>
+            </div>
+            <!-- end div for complaint qty error -->
+
+            <!-- start table div -->
+            <div class="col-lg-12 col-md-12 col-xs-12 scroll-bar" style="margin-bottom: 10px;" *ngIf="itemDetails?.length>0">
+                <!-- start item form -->
+                <form [formGroup]="itemListFormGroup">
+                    <table class="table-style">
+                        <thead>
+                            <tr class="th-style">
+                                <td class="hideextra header-style-first">Official Document No</td>
+                                <td class="hideextra header-style">Material Code</td>
+                                <td class="hideextra header-style">Material Name</td>
+                                <td class="hideextra header-style">Billing Date</td>
+                                <td class="hideextra header-style">Batch No</td>
+                                <td class="hideextra header-style">Invoice Qty(in Tons)</td>
+                                <td class="hideextra header-style">Complaint Qty(in Tons)</td>
+                                <td *ngIf="commSetlmntLevel == 2" class="hideextra header-style bold-font" style="padding-top:9px;">Compensation Qty(in Tons)
+                                    <label class="red-asterick">*</label>
+                                </td>
+                                <td *ngIf="commSetlmntLevel != 2" class="hideextra header-style">Compensation Qty(in Tons)
+                                </td>
+                                <td *ngIf="commSetlmntLevel == 2" class="hideextra header-style bold-font" style="padding-top:9px;">Item Rate
+                                    <label class="red-asterick">*</label>
+                                </td>
+                                <td *ngIf="commSetlmntLevel != 2" class="hideextra header-style">Item Rate
+                                </td>
+                                <td class="hideextra header-style">Settlement Cost</td>
+                                <td class="hideextra header-style">Project Name</td>
+                                <td class="hideextra header-style-last">Project Location</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="tr-style" *ngFor="let itemDet of itemDetails">
+                                <td class="td-style-first hideextra">
+                                    {{itemDet.invoiceNo}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{itemDet.itemCode}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{itemDet.itemName}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{itemDet.invoiceDate| date: 'dd-MMM-yyyy'}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{itemDet.batchNo}}
+                                </td>
+                                <td class="td-style hideextra number-align-style">
+                                    {{itemDet.invoiceQtyInTons}}
+                                </td>
+                                <td class="td-style hideextra number-align-style">
+                                    {{itemDet.complaintQtyInTons}}
+                                </td>
+                                <td class="td-style hideextra number-align-style">
+                                    <input type="number" *ngIf="commSetlmntLevel == 2" class="form-control number-align-style" formControlName="{{ itemDet.compensationQtyKey }}"
+                                        value="{{itemDet.compensationQty}}" (click)="onCompensationAndItemRateChanges(itemDet)"
+                                        (keyup)="onCompensationAndItemRateChanges(itemDet)" />
+                                    <ng-container *ngIf="commSetlmntLevel != 2">{{itemDet.compensationQty}}</ng-container>
+                                </td>
+                                <td class="td-style hideextra number-align-style">
+                                    <input type="number" *ngIf="commSetlmntLevel == 2" class="form-control number-align-style" style="width: 224px;" 
+                                    formControlName="{{ itemDet.itemRateKey }}"
+                                        value="{{itemDet.itemRate}}" (click)="onCompensationAndItemRateChanges(itemDet)"
+                                        (keyup)="onCompensationAndItemRateChanges(itemDet)" />
+                                    <ng-container *ngIf="commSetlmntLevel != 2">{{itemDet.itemRate}}</ng-container>
+                                </td>
+                                <td class="td-style hideextra number-align-style">
+                                    {{itemDet.settlementCost}}
+                                </td>
+                                <td class="td-style hideextra">
+                                    {{itemDet.projectName}}
+                                </td>
+                                <td class="td-style-last hideextra">
+                                    {{itemDet.projectLocation}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <!-- end of form for item list -->
+            </div>
+            <!--end table div-->
+
+            <!-- start div for edit required comercial settlement  -->
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="commSetlmntLevel == 3 || commSetlmntLevel == 4">
+                <label>Compensation </label>
+                <label class="red-asterick">*</label>
+                <div>
+                    <label class="control control--radio display-style">Accept
+                        <input type="radio" name="compensation" formControlName="compensation" value="A" />
+                        <div class="control__indicator"></div>
+                    </label>
+                    <label class="control control--radio display-style">Reject
+                        <input type="radio" name="compensation" formControlName="compensation" value="R" />
+                        <div class="control__indicator"></div>
+                    </label>
+                    <label class="control control--radio display-style">Query
+                        <input type="radio" name="compensation" formControlName="compensation" value="Q" />
+                        <div class="control__indicator"></div>
+                    </label>
+                </div>
+            </div>
+            <!-- end of div for edit required commercial settlement -->
+
+            <!--start fle upload div-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="commSetlmntLevel == 2">
+                <label for="imageFile">File(s) Upload</label>
+                <label class="red-coloured-label">(max size 100 mb)</label>
+                <input type="file" #fileInput (change)="fileChange($event)" />
+            </div>
+            <!--end of file upload div-->
+
+            <!--files-->
+                <!--start div for show files-->
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="fileArr?.length!=0">
+                    <label>Uploaded file(s)</label>
+                    <div *ngFor="let file of fileArr">
+                        <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                        <br/>
+                    </div>
+                </div>
+                <!--end div for show files-->
+
+            <!-- start div for actn details -->
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="commSetlmntLevel != 1">
+                <label>Remarks</label>
+                <label class="red-asterick">*</label>
+                <textarea formControlName="remarks" class="form-control hide-horizontal-scroll comment-box-textarea-style"
+                    required></textarea>
+                <div class="alert alert-danger" *ngIf="commerCialSettlementFromGroup.get('remarks').hasError('required') && commerCialSettlementFromGroup.get('remarks').touched">
+                    <i class="fa fa-exclamation-circle"></i>Remarks is required!
+                </div>
+            </div>
+            <!-- end of div for actn details -->
+
+            <!-- start div for Submit  and Cancel Button-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- start div for Submit Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder" *ngIf="commSetlmntLevel != 1">
+                    <button type="submit" class="btn btn-primary primary-button-style" [disabled]="!(commerCialSettlementFromGroup.valid && itemListFormGroup.valid && itemDetails.length>0 && invoiceItemErrFlag === false)">Submit
+                    </button>
+                    <!--[disabled]="!(commerCialSettlementFromGroup.valid)"-->
+                </div>
+                <!-- end div for Submit Button-->
+                <!-- start div for Cancel Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+                <!-- end div for Cancel Button-->
+            </div>
+            <!-- start div for Submit  and Cancel Button-->
+        </div>
+        <!-- end div for row complaint-form class-->
+        <!-- error msg div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="errorMsgObj.errMsgShowFlag">
+            <div class="alert alert-danger">
+                {{errorMsgObj.errorMsg}}&nbsp;
+                <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- end of error msg div -->
+    </form>
+    <!--end form for commerCialSettlementFromGroup-->
+</div>
+<!--end of div page-container-->
+
+<ispl-busy-spinner *ngIf="busySpinner"></ispl-busy-spinner>

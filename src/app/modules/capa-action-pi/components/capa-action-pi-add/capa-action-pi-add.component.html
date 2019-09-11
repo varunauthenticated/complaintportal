@@ -1,0 +1,249 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </div>
+    <div class="title-style">
+        <h1 class="title-style">{{ title }}</h1>
+    </div>
+    <!--start form for capaActionPIAddFormGroup-->
+    <form [formGroup]="capaActionPIAddFormGroup" autocomplete="off" (ngSubmit)="onCAPAActionPISubmit()">
+        <!-- start div for row complaint-form class-->
+        <div class="row complaint-form">
+            <!--start div complaint reference no -->
+            <div *ngIf="complaintReferenceNo" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <label for="complaintReferenceNo">Complaint Reference No</label>
+                <input type="text" class="form-control" formControlName="complaintReferenceNo" [value]="complaintReferenceNo"
+                    readonly="readonly" />
+            </div>
+            <!--end of div for complaint reference no-->
+            <!-- start div to add Corrective and Preventive actn -->
+            <ng-container *ngIf="actionType==' '">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Corrective/Preventive Action</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Corrective
+                            <input type="radio" name="cpAction" formControlName="cpAction" (click)="onCAPARadioClick('C')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">Preventive
+                            <input type="radio" name="cpAction" formControlName="cpAction" (click)="onCAPARadioClick('P')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- end of div to add Corrective and Preventive actn -->
+            <!-- start div to edit Corrective and Preventive actn -->
+            <ng-container *ngIf="actionType=='C'">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Corrective/Preventive Action</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Corrective
+                            <input type="radio" name="cpAction" formControlName="cpAction" [checked]=true (click)="onCAPARadioClick('C')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">Preventive
+                            <input type="radio" name="cpAction" formControlName="cpAction" (click)="onCAPARadioClick('P')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="actionType=='P'">
+                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                    <div style="display:inline-block;">
+                        <label>Corrective/Preventive Action</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Corrective
+                            <input type="radio" name="cpAction" formControlName="cpAction" (click)="onCAPARadioClick('C')"
+                                *ngIf="actionTypeTakenAtPlantInShort != 'P'" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">Preventive
+                            <input type="radio" name="cpAction" formControlName="cpAction" [checked]=true (click)="onCAPARadioClick('P')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- end of div to edit Corrective and preventive actn -->
+            <!-- start div for actn details -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="actnDetails!=undefined">
+                <label for="detailOfComplaint">Action Details</label>
+                <label class="red-asterick">*</label>
+                <textarea rows="5" formControlName="actionDet" [maxlength]="actionTakenAtPlantLength" [value]="actnDetails"
+                    class="form-control hide-horizontal-scroll" required></textarea>
+                <div class="alert alert-danger" *ngIf="capaActionPIAddFormGroup.get('actionDet').hasError('required') && capaActionPIAddFormGroup.get('actionDet').touched">
+                    <i class="fa fa-exclamation-circle"></i>Action Details is required!
+                </div>
+            </div>
+            <!-- end of div for actn details -->
+
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="actionTypeTakenAtPlantInShort === 'P'">
+                <label for="detailOfComplaint">Corrective Action Details</label>
+                <textarea readonly rows="5" formControlName="correctiveAction" [value]="correctiveAction" class="form-control hide-horizontal-scroll"></textarea>
+            </div>
+
+            <!-- start div for edit required comercial settlement  -->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <ng-container *ngIf="requiredCommercialSettlement==' '">
+                    <div style="display:inline-block;">
+                        <label>Customer may require commercial settlement</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement"
+                                (click)="onCommercialSettlementRadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement"
+                                (click)="onCommercialSettlementRadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="requiredCommercialSettlement=='Y'">
+                    <div style="display:inline-block;">
+                        <label>Customer may require commercial settlement</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement"
+                                [checked]=true (click)="onCommercialSettlementRadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement"
+                                (click)="onCommercialSettlementRadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="requiredCommercialSettlement=='N'">
+                    <div style="display:inline-block;">
+                        <label>Customer may require commercial settlement</label>
+                        <label class="red-asterick">*</label>
+                        <label class="control control--radio">Yes
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement"
+                                (click)="onCommercialSettlementRadioClick('Y')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label class="control control--radio">No
+                            <input type="radio" name="commercialSettlement" formControlName="commercialSettlement"
+                                [checked]=true (click)="onCommercialSettlementRadioClick('N')" />
+                            <div class="control__indicator"></div>
+                        </label>
+                    </div>
+                </ng-container>
+            </div>
+            <!-- end of div for edit required commercial settlement -->
+            <!--files-->
+            <!--start div for show files-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="complaintReferenceNo && selectedComplaintReferenceDetails.files?.length!=0">
+                <label>Uploaded file(s)</label>
+                <div *ngFor="let file of selectedComplaintReferenceDetails.files">
+                    <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                    <br />
+                </div>
+            </div>
+            <!--end div for show files-->
+
+            <!--start fle upload div-->
+            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left: 0px;">
+                    <label for="imageFile">File(s) Upload</label>
+                    <label class="red-coloured-label">(max size 100 mb)</label>
+                    <input type="file" (change)="fileChange($event)" multiple />
+                </div>
+            </div>
+            <!--end of file upload div-->
+
+            <!-- start div for technical closer at tml end -->
+            <ng-container *ngIf="actionType=='P'">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <b>Technical closer at TML end</b>
+                </div>
+                <div class="row" class="tech-closer-alert">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px;">
+                        <label>
+                            <h4 style="color: #1895de">Technical Closer Date</h4>
+                        </label>
+                        <input type="date" class="form-control" formControlName="techCloserDate" (change)="dateValidation()">
+                        <div class="alert alert-danger" *ngIf="capaActionPIAddFormGroup.get('techCloserDate').touched && capaActionPIAddFormGroup.get('techCloserDate').hasError('required')">
+                            <i class="fa fa-exclamation-circle"></i> Technical Closer Date is required!
+                        </div>
+                        <div class="alert alert-danger" *ngIf="dateErrorFlag.futureDateErrFlag">
+                            <i class="fa fa-exclamation-circle"></i> Technical Closer Date cannot be a future date!
+                        </div>
+                        <div class="alert alert-danger" *ngIf="dateErrorFlag.rcaDateErrFlag">
+                            <i class="fa fa-exclamation-circle"></i> Technical Closer Date cannot be a greater than
+                            Root Cause Analysis date!
+                        </div>
+                    </div>
+                    <h4 style="color: #1895de">Remarks</h4>
+                    <div>
+                        <textarea class="tech-closer-alert-textarea" formControlName="closerremarks"></textarea>
+                        <div class="alert alert-danger" style="width: 98%;" *ngIf="capaActionPIAddFormGroup.get('closerremarks').hasError('required') && capaActionPIAddFormGroup.get('closerremarks').touched">
+                            <i class="fa fa-exclamation-circle"></i>Remarks is required!
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- end of div for technical closer at tml end -->
+
+            <!-- start div for Submit  and Cancel Button-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- start div for Submit Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn btn-primary primary-button-style" [disabled]="!capaActionPIAddFormGroup.valid">Submit
+                    </button>
+                </div>
+                <!-- end div for Submit Button-->
+                <!-- start div for Cancel Button-->
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                    <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                        Cancel
+                    </button>
+                </div>
+                <!-- end div for Cancel Button-->
+            </div>
+            <!-- start div for Submit  and Cancel Button-->
+        </div>
+        <!-- end div for row complaint-form class-->
+        <!-- error msg div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="resMsgType == errorConst">
+            <div class="alert alert-danger">
+                {{resErrorMsg}}&nbsp;
+                <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick(resMsgType)">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- end of error msg div -->
+    </form>
+    <!--end form for capaActionPIAddFormGroup-->
+</div>
+<!--end of div page-container-->
+
+<ispl-busy-spinner *ngIf="busySpinner.busy"></ispl-busy-spinner>

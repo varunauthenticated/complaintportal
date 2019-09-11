@@ -1,0 +1,71 @@
+<div style="text-align:center;">
+    <ng-container *ngIf="routeParam==''">
+        <!--bar chart-->
+        <div style="display: inline-block;margin:5px;" [@DashboardTilesFlyInOutDelay3]>
+            <div class="custom-chart-report-div-style">
+                <span *ngIf="!dataSourceForBarChart; else printData1" style="color:#3078be">
+                    <i class="fa fa-spinner fa-spin" style="font-size:30px"></i>
+                </span>
+                <ng-template #printData1>
+                    <fusioncharts [chartConfig]=chartConfig [dataSource]=dataSourceForBarChart>
+                    </fusioncharts>
+                </ng-template>
+            </div>
+        </div>
+
+        <!--pie chart-->
+        <div style="display: inline-block;margin:5px;" [@DashboardTilesFlyInOutDelay3]>
+            <div class="custom-chart-report-div-style">
+                <span *ngIf="!dataSourceOfPieChart; else printData" style="color:#3078be">
+                    <i class="fa fa-spinner fa-spin" style="font-size:30px"></i>
+                </span>
+                <ng-template #printData>
+                    <fusioncharts [width]="widthOfPieChart" [height]="heightOfPieChart" [type]="typeOfPieChart"
+                        [dataFormat]="dataFormatOfPieChart" [dataSource]="dataSourceOfPieChart">
+                    </fusioncharts>
+                </ng-template>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="routeParam">
+        <!--pareto chart-->
+        <div *ngIf="routeParam=='pareto'" style="display: inline-block;margin:2%;" [@DashboardTilesFlyInOutDelay4]>
+            <div class="custom-chart-report-div-style">
+                    <span *ngIf="!dataSourceForParetoChart; else printData1" style="color:#3078be">
+                            <i class="fa fa-spinner fa-spin" style="font-size:30px"></i>
+                        </span>
+                        <ng-template #printData1>
+                <fusioncharts [width]="width" [height]="height" [type]="type" [dataFormat]="dataFormat"
+                    [dataSource]="dataSourceForParetoChart">
+                </fusioncharts></ng-template>
+            </div>
+        </div>
+
+        <!--bar chart-->
+        <div *ngIf="routeParam=='bar'" style="display: inline-block;margin:2%;" [@DashboardTilesFlyInOutDelay4]>
+            <div class="custom-chart-report-div-style">
+                    <span *ngIf="!dataSourceForBarChart; else printData2" style="color:#3078be">
+                            <i class="fa fa-spinner fa-spin" style="font-size:30px"></i>
+                        </span>
+                        <ng-template #printData2>
+                <fusioncharts [chartConfig]=chartConfig [dataSource]=dataSourceForBarChart>
+                </fusioncharts></ng-template>
+            </div>
+        </div>
+
+        <!--pie chart-->
+        <div *ngIf="routeParam=='pie'" style="display: inline-block;margin:2%;" [@DashboardTilesFlyInOutDelay4]>
+            <div class="custom-chart-report-div-style">
+                    <span *ngIf="!dataSourceOfPieChart; else printData3" style="color:#3078be">
+                            <i class="fa fa-spinner fa-spin" style="font-size:30px"></i>
+                        </span>
+                        <ng-template #printData3>
+                <fusioncharts [width]="widthOfPieChart" [height]="heightOfPieChart" [type]="typeOfPieChart"
+                    [dataFormat]="dataFormatOfPieChart" [dataSource]="dataSourceOfPieChart">
+                </fusioncharts></ng-template>
+            </div>
+        </div>
+    </ng-container>
+</div>

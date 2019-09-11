@@ -1,0 +1,67 @@
+/* new aqdded fort span border  */
+.active-header-style {
+    /*  #0275d8;*/
+    background-color: #045ead;
+    color:white;
+  }
+  .active-footer-style {
+    background-color: #0787f4;
+    color: white;
+    height:22px;
+    display: grid;
+  }
+  .complete-header-style {
+    background-color: #246b04;
+    color:white;
+  }
+  .complete-footer-style {
+    background-color: #009D22;
+    color: white;
+    height:22px;
+    display: grid;
+  }
+
+
+  .inactive-header-style {
+    background-color: #8c8d8e;
+    color: black;
+
+  }
+
+  .inactive-footer-style {
+    background-color: #babdbf;
+    color: #0c0c0c;
+    height:22px;
+    display: grid;
+  }
+
+  /*span style  */
+  .header-span-style {
+    /* font-size: 16px;text-align: center;vertical-align: middle;
+                    line-height: 25px;letter-spacing: 1px; */
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 15px;
+    letter-spacing: 4px;
+    font-family: monospace;
+  }
+  .footer-span-style {
+     /*font-size: 12px;display: table-cell;text-align: center;vertical-align: middle;
+    line-height: 14px;padding: 5px;word-wrap: break-word;*/
+    font-size: 12px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 19px;
+    padding: 2px;
+    word-wrap: break-word;
+  }
+
+  .comp-struc-div-style{
+    text-align: center;
+    padding-right:0px;
+    padding-left:0px;
+    width: 115px;
+    height:60px;
+  }

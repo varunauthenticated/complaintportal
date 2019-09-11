@@ -1,0 +1,95 @@
+.tiles-content{
+    background-color: white;
+    /* width: 321px;
+    height: 316px; */
+    margin: auto;
+    box-shadow: 1px 1px 15px #949494;
+    padding-bottom: 10px;
+}
+
+.tiles-header{
+    height: 69px;
+    border-bottom: 0.8px solid rgba(199, 199, 199, 0.6);
+    display: block;
+    text-align: center;
+    padding-top: 8%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.tiles-footer{
+    height: 117px;
+    border-top: 0.8px solid rgba(199, 199, 199, 0.6);
+    display: block;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-top: 8%;
+    padding-bottom: 9%;
+    padding-left: 7%;
+}
+
+.tiles-body{
+    /* font-family: sans-serif; */
+    height: 220px;
+    display: block;
+    font-weight: normal;
+    font-family: sans-serif;
+    padding-top: 4%;
+    text-align: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: -26%;
+}
+
+.tiles-header-content{
+    font-size: 22px;
+    font-family: sans-serif;
+    font-stretch: normal; 
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    /* color: black;  */
+    outline-color: rgb(65, 65, 65);
+    /* color: rgb(65, 65, 65); */
+    word-wrap: break-word;
+}
+
+.tiles-header-content-info{
+    font-size: 11px;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    -webkit-font-variant-ligatures: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    /* color: black; */
+    outline-color: rgb(65, 65, 65);
+    color: rgb(65, 65, 65);
+    word-wrap: break-word;
+}
+
+.tiles-body-text{
+    display: block;
+    font-size: 12px;
+    margin-bottom: 0%;
+}
+
+.tiles-body-date-range{
+    display: block;
+    font-size: 12px;
+    margin-top: 0%;
+    margin-bottom: 1%;
+}
+
+.tiles-body-number{
+    display: block;
+    font-size: 60px;
+    font-weight: normal;
+    cursor: pointer;
+    margin-top: 0%;
+    padding-right: 10px;
+    color:wheat;
+}

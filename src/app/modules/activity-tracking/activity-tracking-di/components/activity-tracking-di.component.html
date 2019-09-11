@@ -1,0 +1,141 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">Activity Tracking</li>
+        </ol>
+    </div>
+    <!-- start div for grid and pagination-->
+    <div class="container col-lg-12 col-sm-12 col-md-12 col-xs-12">
+
+        <!--start search div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="display: inline-block;">
+            </div>
+            <div [formGroup]="searchFormGroup" class="input-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: right;">
+                <input type="search" class="form-control search-input" formControlName="gridSearch" placeholder="Search by Complaint Number">
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+        </div>
+        <!-- end of search div -->
+
+        <!--start div for faceted and grid-->
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 15px;">
+
+            <!--start div for faceted nav-->
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 faceted-nav">
+                <div class="row faceted-header">
+                    <span class="label-faceted-header">Status</span>
+                </div>
+                <div *ngFor="let facetedData of facetedDataModel">
+                    <form [formGroup]="facetedFormGroup">
+                        <div style="padding: 5px;">
+                            <input type="checkbox" formControlName="{{facetedData.activityId}}" [checked]=false />
+                            <span>
+                                {{facetedData.facetedDisplayName}}
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- end of div for faceted -->
+            <!-- start div for only grid and paination -->
+            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12" style="float:right;padding-right: 0px;">
+                <!-- start table div -->
+                <div class="col-lg-12 col-md-12 col-xs-12" style="margin-bottom: 15px; padding-right: 0; margin-top: -7px;">
+                    <form [formGroup]="activityTrackingFormGroup">
+                        <table class="table-style">
+                            <thead class="text-align-style">
+                                <tr class="header-tr-style">
+                                    <td *ngIf="gridConfigModel['complainRefNo']" [ngClass]="gridConfigModel['complainRefNo'].headerClass">
+                                        {{ gridConfigModel['complainRefNo'].headerDesc }}
+                                    </td>
+                                    <td *ngIf="gridConfigModel['statusDisplay']" [ngClass]="gridConfigModel['statusDisplay'].headerClass">
+                                        {{ gridConfigModel['statusDisplay'].headerDesc }}
+                                    </td>
+                                    <td *ngIf="gridConfigModel['commercialSett']" [ngClass]="gridConfigModel['commercialSett'].headerClass">
+                                        {{ gridConfigModel['commercialSett'].headerDesc }}
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody class="text-align-style">
+                                <tr *ngFor="let activityTrackDI of compDIStatusRes 
+                            | isplSearch: searchFormGroup.value.gridSearch: gridConfigModel"
+                                    class="tbody-tr-style">
+                                    <td *ngIf="gridConfigModel['complainRefNo']" [ngClass]="gridConfigModel['complainRefNo'].dataClass">
+                                        <span class="custom-link" (click)="onClickCompRefNo(activityTrackDI)">{{activityTrackDI.complainRefNo}}</span>
+                                    </td>
+                                    <td *ngIf="gridConfigModel['statusDisplay']" [ngClass]="gridConfigModel['statusDisplay'].dataClass">
+                                        <!--status-->
+                                        <ispl-comp-status-structure [compStatus]="activityTrackDI.currentStatus"
+                                            [displayArr]="activityTrackDI.statusDisplay"></ispl-comp-status-structure>
+                                    </td>
+                                    <td *ngIf="gridConfigModel['commercialSett']" [ngClass]="gridConfigModel['commercialSett'].dataClass">
+                                        <label class="switch" *ngIf="!activityTrackDI.commercialSett">
+                                            <input type="checkbox" [checked]=activityTrackDI.commercialSett
+                                                formControlName="commercialCheck" (click)="onCommSetSwitchBtnClick(activityTrackDI.complainRefNo)">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <span *ngIf="activityTrackDI.commercialSett" class="custom-link" (click)="onClickCommSetLinkClick(activityTrackDI)">Details</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <!-- end of div for grid -->
+                <!-- new add for pagination -->
+                <nav aria-label="Page navigation example" style="float:right">
+                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a class="page-link" (click)="setPage(1)">First</a>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                        </li>
+                        <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                            <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- end of pagination -->
+            </div>
+            <!-- end of div for grid and pagination-->
+        </div>
+        <!-- end of div for faceted and grid -->
+    </div>
+    <!-- end of div for grid and pagination -->
+</div>
+<!--end of page container-->
+<ispl-busy-spinner *ngIf="busySpinner"></ispl-busy-spinner>
+
+<!-- modal for comm set  -->
+<!-- add item modal -->
+<div *ngIf="comSetFlag" class="overlay"></div>
+<div *ngIf="comSetFlag" class="com-set-modal-style">
+    <!-- header div -->
+    <div class="modal-header">
+        <div> Commercial Settlement </div>
+        <div (click)="cancelModal()" style="cursor: pointer;">x</div>
+    </div>
+    <div class="modal-body">
+        <div class="text-align-style">Enable Commercial Settlement?</div>
+        <div class="text-align-style" style="margin-top: 20px;">
+            <button type="submit" class="btn btn-primary cursor-pointer" (click)="onCommSetModalSubmitClick('Y')">Yes</button>
+            <button type="submit" class="btn btn-secondary cursor-pointer" (click)="onCommSetModalSubmitClick('N')">No</button>
+        </div>
+    </div>
+    <!-- end of body div -->
+</div>
+<!-- end of modal -->

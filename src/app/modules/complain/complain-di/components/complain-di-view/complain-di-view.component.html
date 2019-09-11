@@ -1,0 +1,369 @@
+<div class="page-container">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="#/home">Home</a>
+    </li>
+    <li class="breadcrumb-item active">{{title}}</li>
+  </ol>
+
+  <!-- Write Your Code -->
+  <!-- start div for container -->
+  <div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12" style="width:100%;">
+    <div *ngIf="serverSearchArr.length > 0 || anyValue" style="margin-bottom: 10px;">
+      <span style="cursor: pointer;" class="searched-data" title="Clear All" (click)="deleteSearchedValOnClick()">
+        <b>Detailed Searched Value: </b>
+        <ng-container *ngFor="let srvrsrchArrEl of serverSearchArr">
+          <span style="color: #1c2ad4;font-weight: 500; font-size: small;">{{srvrsrchArrEl.htmlLblName}}: </span>
+          <span style="color: black;font-weight: 500;font-size: small;">"{{srvrsrchArrEl.value}}"</span>
+        </ng-container>
+        <ng-container *ngIf="anyValue">
+          <span style="color: black;font-weight: 500;font-size: small;">"{{anyValue}}"</span>
+        </ng-container>
+        <div style="display:inline-block;">
+          <button aria-label="Close" class="close" type="button">
+            <span aria-hidden="true">×</span>
+          </button>&nbsp;
+        </div>
+      </span>
+    </div>
+    <!--start search div -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="display: inline-block;">
+        <button type="submit" class="btn btn-default cursor-pointer" style="float: right;background-color: lightgrey;" (click)="onClickFullSearchBtn()">
+          Detailed Search<i class="fa fa-search" style="padding-left: 7%;"></i>
+        </button>
+      </div>
+      <div [formGroup]="searchFormGroup" class="input-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: right;">
+        <input type="search" class="form-control search-input" formControlName="gridSearch" placeholder="Quick Search">
+        <span class="input-group-addon">
+          <i class="fa fa-search"></i>
+        </span>
+      </div>
+    </div>
+    <!-- end of search div -->
+
+    <!--start div for row-->
+    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 15px;">
+      <!--start div for faceted nav-->
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 faceted-nav">
+        <!--start div for status-->
+        <!-- <ng-container> -->
+        <div class="row faceted-header">
+          <span class="label-faceted-header">Complaint Status</span>
+        </div>
+        <div *ngIf="facetedNavData?.complainStatus && changeStattusGroup">
+          <form [formGroup]="changeStattusGroup">
+            <div *ngFor="let statusFacet of facetedNavData?.complainStatus" style="padding: 2px;">
+              <ng-container *ngIf="statusFacet.lastActivityId">
+                <input type="checkbox" formControlName="{{statusFacet.lastActivityId}}" />
+                <span>
+                  {{ statusFacet.lastStatus }}
+                </span>
+              </ng-container>
+            </div>
+          </form>
+
+        </div>
+
+        <div class="row faceted-header">
+          <span class="label-faceted-header">Complaint Type</span>
+        </div>
+        <div *ngIf="facetedNavData?.complainType && complanTypeFormgroup">
+          <form [formGroup]="complanTypeFormgroup">
+            <div *ngFor="let complainTypeFacet of facetedNavData?.complainType" style="padding: 2px;">
+              <ng-container *ngIf="complainTypeFacet.complaintTypeDesc">
+                <input type="checkbox" formControlName="{{complainTypeFacet.complaintTypeId}}" />
+                <span>
+                  {{ complainTypeFacet.complaintTypeDesc }}
+                </span>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+
+        <div class="row faceted-header">
+          <span class="label-faceted-header">Nature of Complaint</span>
+        </div>
+        <div *ngIf="facetedNavData?.natureOfComplain && natureOfComplainGroup">
+          <form [formGroup]="natureOfComplainGroup">
+
+            <div *ngFor="let natureOfComplainFacet of facetedNavData?.natureOfComplain" style="padding: 2px;">
+              <ng-container *ngIf="natureOfComplainFacet.natureOfComplaintId">
+                <input type="checkbox" formControlName="{{natureOfComplainFacet.natureOfComplaintId}}" />
+                <span>
+                  {{ natureOfComplainFacet.natureOfComplaintDesc }}
+                </span>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+        <!-- </ng-container> -->
+        <!--end div for status-->
+      </div>
+      <!-- end div for faceted nav -->
+
+      <!--start div for actn btn and table grid (col-md-10)-->
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding-right: 0 !important">
+
+        <!--start div for row for actn btn n table grid-->
+        <div class="row">
+
+          <!--start div for actn btn and faceted nav -->
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 0;">
+
+            <!-- start div to show dashboard filter -->
+            <div class="col-lg-12 col-md-12 col-xs-12" style="margin-bottom: 1%;">
+              <span style="color: #292b2c;font-weight: 700;">Effective Date: </span>
+              <span style="color: #1c2ad4;font-weight: 500;font-size: 14px;">
+                <ng-container *ngIf="dashboardParameter">
+                  "{{tilesInteractionService.wsFilter?.fromDate}}" to "{{tilesInteractionService.wsFilter?.toDate}}"
+                  <span class="dashboard-predefined-filter-style">(Faceted Nav and Search will reset predefined filter)</span>
+                </ng-container>
+                <ng-container *ngIf="dashboardParameter==''">
+                  "01-Jan-2018" to "{{fromDate | date: 'dd-MMM-yyyy'}}"
+                </ng-container>
+              </span>
+            </div>
+            <!-- end of div for dashboard filter -->
+
+            <!-- start table div -->
+            <div class="col-lg-12 col-md-12 col-xs-12" style="margin-bottom: 15px; padding-right: 0; margin-top: -7px;">
+              <form [formGroup]="commSettFormGroup">
+                <table class="table-style">
+                  <thead>
+                    <tr class="th-style">
+                      <td class="header-style-first hideextra" (click)="sortdata('CMPLNT_REF_NO')">
+                        {{ gridHeader.complaintReferenceNo }}
+                        <i *ngIf="sortSelection.sortData == 'CMPLNT_REF_NO' && sortSelection.orderType == 'ASC'" class="fa fa-sort-asc"></i>
+                        <i *ngIf="sortSelection.sortData == 'CMPLNT_REF_NO' && sortSelection.orderType == 'DESC'" class="fa fa-sort-desc"></i>
+                        <i *ngIf="sortSelection.sortData != 'CMPLNT_REF_NO' || sortSelection.orderType == ''" class="fa fa-sort"></i>
+                      </td>
+                      <td class="header-style hideextra" (click)="sortdata('CMPLNT_REF_DATE')">
+                        Complaint Date
+
+                        <i *ngIf="sortSelection.sortData == 'CMPLNT_REF_DATE' && sortSelection.orderType == 'ASC'"
+                          class="fa fa-sort-asc"></i>
+                        <i *ngIf="sortSelection.sortData == 'CMPLNT_REF_DATE' && sortSelection.orderType == 'DESC'"
+                          class="fa fa-sort-desc"></i>
+                        <i *ngIf="sortSelection.sortData != 'CMPLNT_REF_DATE' || sortSelection.orderType == ''" class="fa fa-sort"></i>
+                      </td>
+
+                      <td class="header-style hideextra" (click)="sortdata('CUSTOMER_NAME')">
+                        {{ gridHeader.customerName }}
+                        <i *ngIf="sortSelection.sortData == 'CUSTOMER_NAME' && sortSelection.orderType == 'ASC'" class="fa fa-sort-asc"></i>
+                        <i *ngIf="sortSelection.sortData == 'CUSTOMER_NAME' && sortSelection.orderType == 'DESC'" class="fa fa-sort-desc"></i>
+
+                        <i *ngIf="sortSelection.sortData != 'CUSTOMER_NAME' || sortSelection.orderType == ''" class="fa fa-sort"></i>
+                      </td>
+
+                      <td class="header-style hideextra" (click)="sortdata('CMPLNT_TYPE_DESC')">
+                        {{ gridHeader.complaintTypeDesc }}
+                        <i *ngIf="sortSelection.sortData == 'CMPLNT_TYPE_DESC' && sortSelection.orderType == 'ASC'"
+                          class="fa fa-sort-asc"></i>
+                        <i *ngIf="sortSelection.sortData == 'CMPLNT_TYPE_DESC' && sortSelection.orderType == 'DESC'"
+                          class="fa fa-sort-desc"></i>
+                        <i *ngIf="sortSelection.sortData != 'CMPLNT_TYPE_DESC' || sortSelection.orderType == ''" class="fa fa-sort"></i>
+                      </td>
+
+                      <td class="header-style hideextra" (click)="sortdata('NAT_CMPLNT_DESC')">
+                        {{ gridHeader.natureOfComplaintDesc }}
+                        <i *ngIf="sortSelection.sortData == 'NAT_CMPLNT_DESC' && sortSelection.orderType == 'ASC'"
+                          class="fa fa-sort-asc"></i>
+                        <i *ngIf="sortSelection.sortData == 'NAT_CMPLNT_DESC' && sortSelection.orderType == 'DESC'"
+                          class="fa fa-sort-desc"></i>
+                        <i *ngIf="sortSelection.sortData != 'NAT_CMPLNT_DESC' || sortSelection.orderType == ''" class="fa fa-sort"></i>
+                      </td>
+                      <td class="header-style hideextra" (click)="sortdata('ACTIVITY_DESC')">
+                        {{ gridHeader.lastStatus }}
+                        <i *ngIf="sortSelection.sortData == 'ACTIVITY_DESC' && sortSelection.orderType == 'ASC'" class="fa fa-sort-asc"></i>
+                        <i *ngIf="sortSelection.sortData == 'ACTIVITY_DESC' && sortSelection.orderType == 'DESC'" class="fa fa-sort-desc"></i>
+                        <i *ngIf="sortSelection.sortData != 'ACTIVITY_DESC' || sortSelection.orderType == ''" class="fa fa-sort"></i>
+                      </td>
+                      <td class="header-style-last hideextra">
+                        <ng-container *ngIf="commSetlmntLevel !=0">
+                          {{ gridHeader.commercialSettlement }}
+                        </ng-container>
+                      </td>
+                    </tr>
+                  </thead>
+
+                  <!--| isplSearch: searchFormGroup.value.gridSearch : complaintDIViewDetails;-->
+
+                  <tbody>
+                    <tr class="tr-style" *ngFor="let complaintViewValue of complaintDIViewDetails
+                  | isplSearch: searchFormGroup.value.gridSearch : gridHeader
+              ; let odd = odd; let even = even;"
+                      [ngClass]="{even: even, odd: odd }">
+                      <td class="td-style-first">
+                        <span class="custom-link" title="Click here" (click)="getComplaintDetailsOnSelect(complaintViewValue,'View')">
+                          {{complaintViewValue.complaintReferenceNo}}
+                        </span>
+                      </td>
+                      <td class="td-style">{{complaintViewValue.complaintReferenceDt| date: 'dd-MMM-yyyy' }}</td>
+                      <td class="td-style">{{complaintViewValue.customerName}}</td>
+                      <td class="td-style">{{complaintViewValue.complaintTypeDesc}}</td>
+                      <td class="td-style">{{complaintViewValue.natureOfComplaintDesc}}</td>
+                      <td class="td-style">{{complaintViewValue.lastStatus}}</td>
+                      <td class="td-style-last">
+                        <ng-container *ngIf="commSetlmntLevel !=0">
+                          <ng-container *ngIf="complaintViewValue.commercialSett == 'Y' then thenBlockOfCommSett; else elseBlokOfCommSett"></ng-container>
+                          <ng-template #thenBlockOfCommSett>
+                              <span *ngIf="complaintViewValue.commercialSettCount > 0" 
+                                class="custom-link" (click)="onClickCommSetLinkClick(complaintViewValue)">
+                                Details
+                              </span>                                
+                              <span *ngIf="commSetlmntLevel == 2 && complaintViewValue.commercialSettCount == 0" 
+                              class="custom-link" (click)="onClickCommSetLinkClick(complaintViewValue)">
+                                Yes
+                              </span>
+                              <span *ngIf="commSetlmntLevel != 2 && complaintViewValue.commercialSettCount == 0" 
+                              style="color: #2CFF2C;font-weight: 600;">
+                                Yes
+                              </span>
+                          </ng-template>
+                          <ng-template #elseBlokOfCommSett>
+                            <label class="switch" *ngIf="commSetlmntLevel == 2 && complaintViewValue.lastActivityId != '10'">
+                              <input type="checkbox" formControlName="commercialCheck" (click)="onCommSetSwitchBtnClick(complaintViewValue.complaintReferenceNo)">
+                              <span class="slider round"></span>
+                            </label>
+                            <span *ngIf="commSetlmntLevel == 2 && complaintViewValue.lastActivityId == '10'">NA</span>
+                            <span *ngIf="commSetlmntLevel != 2" style="color:#FB231C;font-weight:600;">No</span>
+                          </ng-template>
+                        </ng-container>
+                        
+                        <!-- <label class="switch" *ngIf="complaintViewValue.commercialSett == 'N'">
+                          <input type="checkbox" formControlName="commercialCheck" (click)="onCommSetSwitchBtnClick(complaintViewValue.complaintReferenceNo)">
+                          <span class="slider round"></span>
+                        </label>
+                        <span *ngIf="complaintViewValue.commercialSett == 'Y' && complaintViewValue.commercialSettCount > 0" 
+                          class="custom-link" (click)="onClickCommSetLinkClick(complaintViewValue)">
+                          Details
+                        </span>
+                        <span *ngIf="complaintViewValue.commercialSett == 'Y' && complaintViewValue.commercialSettCount == 0">Yes</span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+            <!-- end of table div -->
+            <nav aria-label="Page navigation example" style="float:right">
+
+              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a class="page-link" (click)="setPage(1)">First</a>
+                </li>
+                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                  <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                </li>
+                <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                  <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                </li>
+                <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                </li>
+                <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                  <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <!--end of div for actn btn n faceted nav-->
+
+        </div>
+        <!--end of div row for actn btn n table grid-->
+      </div>
+      <!--end of div for actn btn n table(col-md-10)-->
+
+    </div>
+    <!--end of div row-->
+
+  </div>
+  <!-- end of div container -->
+</div>
+<!-- end of div page-container -->
+
+<!-- server-search modal -->
+<div *ngIf="serverSearchModal" class="overlay"></div>
+<!-- <div class="modal">I'm the modal window!</div> -->
+<div *ngIf="serverSearchModal" class="server-search-modal">
+  <!-- header div -->
+  <div class="modal-header">
+    <div> Full Search </div>
+    <div (click)="cancelServerSearchModal()" style="cursor: pointer;">x</div>
+  </div>
+  <!-- end of header div -->
+  <!-- start body div -->
+  <div class="modal-body">
+    <!-- start server search modal -->
+    <div class="form-group" style="margin-right: -15%;">
+      <!-- start form tag -->
+      <form [formGroup]="serverSearchModalFormGroup">
+        <div style="padding: 9px;width: 80%;border-radius: 10px;">
+          <label>Any</label>
+          <input type="text" formControlName="anyTypeSearch" style="width: 100%">
+        </div>
+        <span style="margin-left: 35%;color: #49007f;">OR</span>
+        <div style="padding: 9px;width: 80%;border-radius: 10px;">
+          <div style="width: 100%">
+            <label>Complaint Number</label>
+            <input type="text" formControlName="complaintNumber" style="width: 100%">
+          </div>
+          <div style="width: 100%">
+            <label>Customer Name</label>
+            <input type="text" formControlName="customerName" style="width: 100%">
+          </div>
+          <div style="width: 100%">
+            <label>Complaint Type</label>
+            <input type="text" formControlName="complaintType" style="width: 100%">
+          </div>
+          <div style="width: 100%">
+            <label>Nature of Complaint</label>
+            <input type="text" formControlName="natureOfComplaint" style="width: 100%">
+          </div>
+          <div style="width: 100%">
+            <label>Complaint Status</label>
+            <input type="text" formControlName="complaintStatus" style="width: 100%">
+          </div>
+        </div>
+      </form>
+      <!-- end of form tag -->
+    </div>
+    <!-- end of div -->
+    <!-- start button div -->
+    <div>
+      <div style="float: right;margin-top: -2%;">
+        <button type="submit" class="btn btn-primary primary-button-style" style="width: 138px; height: 35px; margin-right: 40px;cursor:pointer;"
+          (click)="onClickSearchModalSubmit()" [disabled]="enableSearchModalBtn()">Search
+        </button>
+      </div>
+    </div>
+    <!-- end of button div -->
+  </div>
+  <!-- end of body div -->
+</div>
+<!--end of server-search-modal -->
+
+<ispl-busy-spinner *ngIf="busySpinner">
+</ispl-busy-spinner>
+
+
+<!-- modal for comm set  -->
+<!-- add item modal -->
+<div *ngIf="comSetFlag" class="overlay-comm-sett"></div>
+<div *ngIf="comSetFlag" class="com-set-modal-style">
+    <!-- header div -->
+    <div class="modal-header">
+        <div> Commercial Settlement </div>
+        <div (click)="cancelModal()" style="cursor: pointer;">x</div>
+    </div>
+    <div class="modal-body">
+        <div class="text-align-style">Enable Commercial Settlement?</div>
+        <div class="text-align-style" style="margin-top: 20px;">
+            <button type="submit" class="btn btn-primary cursor-pointer" style="margin-right: 6px;" (click)="onCommSetModalSubmitClick('Y')">Yes</button>
+            <button type="submit" class="btn btn-secondary cursor-pointer" (click)="onCommSetModalSubmitClick('N')">No</button>
+        </div>
+    </div>
+    <!-- end of body div -->
+</div>
+<!-- end of modal -->

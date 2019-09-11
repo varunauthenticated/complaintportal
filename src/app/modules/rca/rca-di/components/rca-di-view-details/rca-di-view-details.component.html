@@ -1,0 +1,143 @@
+<div class="page-container">
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </div>
+    <!--start process flow div-->
+    <app-flowmangement [complainNo]="routeParam.complaintReferenceNo" [complianStatus]="routeParam.complaintStatus" [pageType]="'view'"></app-flowmangement>
+    <!-- end div of process flow  -->
+    <!-- start div for rca body -->
+    <div>
+        <!-- start table div -->
+        <div *ngIf="rcaDetails.length > 1" class="col-lg-12 col-md-12 col-xs-12 scroll-bar grid-table-style" style="margin-top: 5px;">
+            <table class="table-style">
+                <thead>
+                    <tr class="th-style">
+                        <td class="header-style-first">Select</td>
+                        <td class="hideextra" *ngFor="let rcaRprt of rcaReportTable" [ngClass]="rcaRprt.headerClass">
+                            {{ rcaRprt.headerDesc }}
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr class="tr-style" *ngFor="let rcaDet of rcaDetails; let rcaIndx = index;">
+                        <td class="td-style-first" style="cursor: pointer;" (click)="selectData(rcaIndx)">
+                            <i class="fa" [ngClass]="rcaIndex == rcaIndx ? 'fa-dot-circle-o' : 'fa-circle-o'"></i>
+                        </td>
+                        <td class="hideextra" *ngFor="let rcaRprt of rcaReportTable" [ngClass]="rcaRprt.dataClass">
+                            <ng-container *ngIf="rcaRprt.headerKey == 'rootCauseAnanysisDate'">{{ rcaDet[rcaRprt.headerKey] | date:'dd-MMM-yyyy'
+                            }}</ng-container>
+                            <ng-container *ngIf="rcaRprt.headerKey !='rootCauseAnanysisDate'">{{ rcaDet[rcaRprt.headerKey] }}</ng-container>
+    
+                            <!-- {{ rcaDet[rcaRprt.headerKey] }} -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--end table div-->
+        <!-- new add for reject reason -->
+        <div class="alert alert-danger" *ngIf="rcaRejectReason" style="margin-right: 29px;margin-left: 30px;">
+            <h4 style="color: #ef0600;font-size: 15px;">{{rejectLabelJson.rcaMsgForRejectLabel}} :</h4>
+            <div>
+                {{rcaRejectReason}}
+            </div>
+        </div>
+        <!-- end of reject reason -->
+
+        <!--start form for rcaDIAddEditFormGroup-->
+        <div class="complaint-form">
+            <form [formGroup]="rcaDIAddEditFormGroup" autocomplete="off">
+                <!-- start div for row class-->
+                <div class="row">
+                    <!--start div complaint reference no -->
+                    <div *ngIf="routeParam.complaintReferenceNo" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label for="complaintReferenceNo">Complaint Reference No</label>
+                        <input type="text" class="form-control" formControlName="complaintReferenceNo" readonly="readonly" />
+                    </div>
+                    <!--end of div for complaint reference no-->
+
+                    <!--start div closeDate-->
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label>Date</label>
+                        <input type="text" class="form-control" formControlName="rcaAddEditDate" readonly="readonly" />
+                    </div>
+                    <!--end of div for closeDate-->
+
+                    <!-- start div for rca details -->
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <label>RCA Details</label>
+                        <textarea rows="5" formControlName="rcaAddEditDetails" class="form-control hide-horizontal-scroll" readonly="readonly"></textarea>
+                    </div>
+                    <!-- end of div for rca details -->
+
+                    <!--files-->
+                    <!--start div for show files-->
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4" *ngIf="routeParam.complaintReferenceNo && fileDetails?.length>0">
+                        <label>Uploaded file(s)</label>
+                        <div *ngFor="let file of fileDetails">
+                            <a href="{{file.fileUrl}}" target="_blank">{{file.fileName}}</a>
+                            <br/>
+                        </div>
+                    </div>
+                    <!--end div for show files-->
+                    <div class="row" *ngIf="rejectFlag" class="reject-alert">
+                        <h4 style="color: #aa6708">{{rejectLabelJson.rcaMsgForRejectLabel}}</h4>
+                        <div>
+                            <textarea class="reject-alert-textarea" formControlName="rcaARejectDetails"></textarea>
+                        </div>
+                        <div style="margin-top: 8px; padding-right: 24px;">
+                            <button type="submit" style="width: 280px; float: right; background: #aa6708;color:white;" class="btn primary-button-style"
+                                (click)="onRejectSubmit()">
+                                {{rejectLabelJson.rcaBtnForRejectLabel}}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- start div for Submit  and Cancel Button-->
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- start div for Cancel Button-->
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+                            <button type="submit" class="btn default-button-style" (click)="onCancel()">
+                                Cancel
+                            </button>
+                        </div>
+                        <!-- end div for Cancel Button-->
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder" *ngIf="!rejectFlag && routeParam.complaintStatus==60">
+                            <!--&& complaintStatus==60-->
+                            <button type="submit" class="btn btn-danger danger-button-style" (click)="onClickRejectBtn()">
+                                Reject RCA
+                            </button>
+                        </div>
+                    </div>
+                    <!-- end div for Submit  and Cancel Button-->
+                </div>
+                <!-- end div for row complaint-form class-->
+                <!-- error msg div -->
+                <br/>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="errorMsgObj.errMsgShowFlag">
+                    <div class="alert alert-danger">
+                        {{errorMsgObj.errorMsg}}&nbsp;
+                        <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick()">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <br/>
+                    <br/>
+                </div>
+                <!-- end of error msg div -->
+            </form>
+        </div>
+        <!--end form for rcaDIAddEditFormGroup-->
+    </div>
+    <!-- end of div rca body -->
+</div>
+<!--end of div page-container-->
+
+<ispl-busy-spinner *ngIf="busySpinner"></ispl-busy-spinner>

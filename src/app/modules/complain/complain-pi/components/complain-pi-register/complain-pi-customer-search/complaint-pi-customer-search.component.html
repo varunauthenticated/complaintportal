@@ -1,0 +1,108 @@
+<div class="page-container">
+
+    <!-- start div for breadcrumb-->
+    <div>
+        <ol class="breadcrumb breadcrumb-custom">
+            <li class="breadcrumb-item">
+                <a href="#/home">
+                    <i class="fa fa-home"></i> Home </a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </div>
+    <!-- end div for breadcrumb-->
+
+
+    <!-- start div for row complaint-form class-->
+    <div class="row complaint-form">
+        <!--start search div -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group" style="width:100%;">
+                    &nbsp;
+                </div>
+            </div>
+            <div [formGroup]="searchFormGroup" class="input-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: right;">
+                <input type="search" class="form-control search-input" formControlName="gridSearch" placeholder="Search">
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+        </div>
+        <!-- end of search div -->
+
+        <!--start div for select customer button and cancel button-->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 3px;">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2" style="display:inline-block;padding-top: 15px;padding-bottom: 0px;">
+                <button type="button" class="btn btn-primary cursor-pointer" (click)="onCustCodeChoose();" [disabled]="custDetArr.length !== 1"
+                    style="height:40px;">
+                    <i class="fa fa-plus" style="font-size: 13px; color: #FFFFFF"></i> Select Customer
+                </button>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2" style="display:inline-block;padding-top: 15px;padding-bottom: 0px;">
+                <button type="submit" class=" btn default-button-style" (click)="onCancel()" >
+                    Cancel
+                </button>
+            </div>
+        </div>
+        <!--end of div for select customer button-->
+
+        <!-- end of customer name textbox -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 15px; margin-top: 5px;" *ngIf="complaintPICustDetails!=''">
+            <table class="table-style" *ngIf="complaintPICustDetails!=''">
+                <thead>
+                    <tr class="th-style">
+                        <td class="header-style-first">
+                        </td>
+                        <td class="header-style">
+                            {{complaintPICustDetails.customerHeader?.customerCode}}
+                        </td>
+
+                        <td class="header-style">
+                            {{complaintPICustDetails.customerHeader?.customerName}}
+                        </td>
+                        <td class="header-style">
+                            {{complaintPICustDetails.customerHeader?.salesGroup}}
+
+                        </td>
+                        <td class="header-style-last">
+                            {{complaintPICustDetails.customerHeader?.salesOffice}}
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-style" *ngFor="let custDet of complaintPICustDetails.customers
+                | isplSearch: searchFormGroup.value.gridSearch : complaintPICustDetails.customerHeader; 
+                let odd = odd; let even = even;" [ngClass]="{even: even, odd: odd }">
+                        <td class="td-style-first">
+                            <input type="checkbox" class="radio" name="singleCheckbox" (click)="onCustomerNameCheck(custDet.customerCode,custDet.customerName,custDet.salesGroup,custDet.salesOffice)"
+                            />
+                        </td>
+                        <td class="td-style">
+                            {{custDet?.customerCode}}
+                        </td>
+                        <td class="td-style">
+                            {{custDet?.customerName}}
+                        </td>
+                        <td class="td-style">
+                            {{custDet?.salesGroup}}
+                        </td>
+                        <td class="td-style-last">{{custDet?.salesOffice}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- start div to show error msg -->
+            <div class="alert alert-danger" *ngIf="errorMsgObj.errorMsgShowFlag">
+                {{errorMsgObj.errorMsg}}
+            </div>
+            <!-- end of div to show error msg -->
+        </div>
+        <!-- end div for customer code details -->
+
+    </div>
+    <!-- end div for row complaint-form class-->
+</div>
+<!-- end div for page-container class-->
+<ispl-busy-spinner *ngIf="busySpinner.busy">
+</ispl-busy-spinner>

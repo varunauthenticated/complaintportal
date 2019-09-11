@@ -1,0 +1,177 @@
+<div class="page-container">
+  <div>
+    <ol class="breadcrumb breadcrumb-custom">
+      <li class="breadcrumb-item"><a href="#/home"> <i class="fa fa-home"></i> Home </a></li>
+      <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+  </div>
+  <div class="title-style">
+    <h1 class="title-style">{{ title }}</h1>
+  </div>
+
+  <!--start div for add & modify user-->
+  <div>
+    <form [formGroup]="userAddFormGroup" autocomplete="off" (ngSubmit)="addUserSubmit()">
+      <div class="row complaint-form">
+        <!--start div for add Employee id-->
+        <div *ngIf="employeeId==''" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="employeeId">Employee Id</label>
+          <input type="text" id="employeeId" [maxlength]="employeeIdLength" class="form-control" formControlName="employeeId" required>
+          <!--start employeeId validation div-->
+          <div class="alert alert-danger" *ngIf="userAddFormGroup.get('employeeId').hasError('required') && userAddFormGroup.get('employeeId').touched">
+            <i class="fa fa-exclamation-circle"></i> Employee Id is required!
+          </div>
+          <!--end of employeeId validation div-->
+        </div>
+        <!--end of div for add Employee id-->
+        <!--start div for modify employeeId-->
+        <div *ngIf="employeeId" class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="employeeIdLabel">Employee Id</label>
+          <input type="text" class="form-control" formControlName="employeeIdForModify" value="{{employeeId}}" readonly>
+        </div>
+        <!--end of div for modify employee id-->
+        <!--start div for add Employee Name-->
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="employeeName">Employee Name</label>
+          <input type="text" class="form-control" [maxlength]="employeeNameLength" formControlName="employeeName" required>
+          <!--start employeeName validation div-->
+          <div class="alert alert-danger" *ngIf="userAddFormGroup.get('employeeName').hasError('required') && userAddFormGroup.get('employeeName').touched">
+            <i class="fa fa-exclamation-circle"></i> Employee Name is required!
+          </div>
+          <!--end of employeeName validation div-->
+        </div>
+        <!--end of div for add Employee Name-->
+        <!--start div for add designation Name-->
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="designationName">Designation Name</label>
+          <select class="custom-select col-xs-12 col-sm-12 col-md-12 col-lg-12" formControlName="designationName" required>
+            <option *ngFor="let designationvals of designationVal.details" value="{{ designationvals.Key }}">{{ designationvals.Value}}</option>
+          </select>
+          <!--start div for alert-->
+          <div class="alert alert-danger" *ngIf="userAddFormGroup.get('designationName').hasError('required') && userAddFormGroup.get('designationName').touched">
+            <i class="fa fa-exclamation-circle"></i> Designation Name is required!
+          </div>
+          <!--end div for alert-->
+        </div>
+        <!--end of div for add designation Name-->
+        <!--start div for department Name-->
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="departmentName">Department Name</label>
+          <select class="custom-select col-xs-12 col-sm-12 col-md-12 col-lg-12" formControlName="departmentName" required>
+            <option *ngFor="let departmentvals of departmentVal.details" value="{{ departmentvals.Key }}">{{ departmentvals.Value}}</option>
+          </select>
+          <!--start div for alert-->
+          <div class="alert alert-danger" *ngIf="userAddFormGroup.get('departmentName').hasError('required') && userAddFormGroup.get('departmentName').touched">
+            <i class="fa fa-exclamation-circle"></i> Department Name is required!
+          </div>
+          <!--end div for alert-->
+        </div>
+        <!--end of div for department Name-->
+        <!--start div for mobileNo-->
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="mobileNo">Mobile No</label>
+          <input type="text" class="form-control" [maxlength]="employeeMobileNoLength" [value]="mobileNo" formControlName="mobileNo"/>
+          <!--start div for alert-->
+          <div class="alert alert-danger" *ngIf="userAddFormGroup.get('mobileNo').hasError('required') && userAddFormGroup.get('mobileNo').touched">
+            <i class="fa fa-exclamation-circle"></i> Mobile No is required!
+          </div>
+          <!--end div for alert-->
+        </div>
+        <!--end div for mobileNo-->
+
+        <!--start div for Email Id-->
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="emailId">Email Id</label>
+          <input type="text" class="form-control" [maxlength]="employeeEmailIdLength" [value]="emailId" formControlName="emailId"/>
+          <!--start div for alert-->
+          <div class="alert alert-danger" *ngIf="userAddFormGroup.get('emailId').hasError('required') && userAddFormGroup.get('emailId').touched">
+            <i class="fa fa-exclamation-circle"></i> Email Id is required!
+          </div>
+          <!--end div for alert-->
+        </div>
+        <!--end div for Email Id-->
+
+
+        <!--start div for plant type-->
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="plantType">Plant Type</label>
+          <select class="custom-select col-xs-12 col-sm-12 col-md-12 col-lg-12" formControlName="plantType" required>
+            <option *ngFor="let plantTypeVals of plantTypeVal.details" value="{{ plantTypeVals.Key }}">{{ plantTypeVals.Value}}</option>
+          </select>
+          <!--start div for alert-->
+          <div class="alert alert-danger" *ngIf="userAddFormGroup.get('plantType').hasError('required') && userAddFormGroup.get('plantType').touched">
+            <i class="fa fa-exclamation-circle"></i> Plant Type is required!
+          </div>
+          <!--end div for alert-->
+        </div>
+        <!--end of div for Plant Type-->
+
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="roleId">Role Name</label>
+          <select class="custom-select col-xs-12 col-sm-12 col-md-12 col-lg-12" formControlName="roleId" required>
+            <option *ngFor="let roles of roleNames.details"  value="{{ roles.Key }}">
+            {{ roles.Value}}</option>
+          </select>
+          <!--start div for alert-->
+          <div class="alert alert-danger" *ngIf="userAddFormGroup.get('roleId').hasError('required') && userAddFormGroup.get('roleId').touched">
+            <i class="fa fa-exclamation-circle"></i> Role Name is required!
+          </div>
+          <!--end div for alert-->
+        </div>
+
+        <!-- start div for report to dropdown -->
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+          <label for="roleId">Report To</label>
+          <select class="custom-select col-xs-12 col-sm-12 col-md-12 col-lg-12" formControlName="reportToEmployeeId">
+            <option *ngFor="let reprtTo of reportToVal"  value="{{ reprtTo.reportToEmployeeId }}">
+            {{ reprtTo.reportToEmployeeName}}</option>
+          </select>
+        </div>
+        <!-- end div for report to dropdown -->
+
+         <!--start div for commercial settlement level-->
+         <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-4">
+            <label>Commercial Settlement Level</label>
+            <select class="custom-select col-xs-12 col-sm-12 col-md-12 col-lg-12" formControlName="commSettLevel" required>
+              <option *ngFor="let commSettLvl of commercialSettlementLevel" value="{{ commSettLvl.Key }}">{{ commSettLvl.Value}}</option>
+            </select>
+            <!--start div for alert-->
+            <div class="alert alert-danger" *ngIf="userAddFormGroup.get('commSettLevel').hasError('required') && userAddFormGroup.get('commSettLevel').touched">
+              <i class="fa fa-exclamation-circle"></i> Commercial Settlement Level is required!
+            </div>
+            <!--end div for alert-->
+          </div>
+          <!--end of div for add designation Name-->
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+            <button type="submit" class="btn btn-primary primary-button-style" [disabled]="!userAddFormGroup.valid">Submit
+            </button>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 button-holder">
+            <button type="submit" class="btn default-button-style" (click)="onCancel()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- error msg div -->
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="resMsgType == errorConst">
+        <div class="alert alert-danger">
+            {{resErrorMsg}}&nbsp;
+            <button aria-label="Close" class="close" type="button" (click)="deleteResErrorMsgOnClick(resMsgType)">
+        <span aria-hidden="true">×</span>
+      </button>
+        </div>
+        <br/>
+        <br/>
+    </div>
+    <!-- end of error msg div -->
+    </form>
+  </div>
+  <!--end of div for add & modify user-->
+</div>
+<!--end of page container-->
+
+<!--spinner-->
+<ispl-busy-spinner *ngIf="busySpinner.busy"></ispl-busy-spinner>
